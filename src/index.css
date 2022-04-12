@@ -11,3 +11,39 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+@media only screen and (min-width: 770px){
+input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 17px;
+}
+
+input::-webkit-datetime-edit {
+  position: relative;
+  right:5px;
+
+  
+}
+
+input::-webkit-datetime-edit-fields-wrapper {
+  position: relative;
+  left:5px;
+  
+}}
+@media only screen and (max-width: 755px){
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    left: -3px;
+  }
+  
+  input::-webkit-datetime-edit {
+    position: relative;
+    right:5px;
+  
+    
+  }
+  
+  input::-webkit-datetime-edit-fields-wrapper {
+    position: relative;
+    left:30px;
+    
+  }}
