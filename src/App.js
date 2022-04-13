@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import FriendBar from './components/FriendBar';
 import './App.css';
 import React from "react"
 import Login from "./components/login.jsx"
@@ -20,7 +20,7 @@ function App() {
 <Route path="/Signup" element={<Signup />} />
 <Route path="/forgotpassword" element={<Forgotpassword />} />
 <Route path="/*" element={<NotFound />}/>
-<Route path="/home" element={<Home />}/>
+<Route path="/home" element={<> <Home /> <FriendBar /> </>} />
 </Routes>
  <ToastContainer />
 </Router>
