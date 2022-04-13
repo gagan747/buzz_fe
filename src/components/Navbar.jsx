@@ -1,13 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../components/navbar.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBell,
   faEnvelope,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
-function navbar() {
+import { toast } from "react-toastify";
+function Navbar() {
+  const [name, setName] = useState("");
+  const navigate = useNavigate();
+  const islogged = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/home", {
+        method: "GET",
+      });
+
+      const data = await response.json();
+      console.log(data);
+      setName(data.fName + " " + data.lName)
+      if (response.status === 307) {
+        navigate("/login");
+        toast.error("User Not logged In");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    islogged();
+  }, []);
+
   return (
     <>
       <nav className="navbar navbar-expand-xl navbar-light bg-light">
@@ -34,11 +58,11 @@ function navbar() {
             <FontAwesomeIcon icon={faEnvelope}></FontAwesomeIcon>
             <span className="badge">10</span>
           </a>{" "}
-          <span className="user">Ayush Saxena</span>
+          <span className="user">{name}</span>
         </div>
       </nav>
     </>
   );
 }
 
-export default navbar;
+export default Navbar;
