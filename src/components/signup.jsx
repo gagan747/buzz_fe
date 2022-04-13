@@ -182,7 +182,7 @@ export default function Signup() {
 
                                                 <div className=" row   justify-content-around mx-4 mb-3 mb-lg-4">
                                                     <button type="submit"style={{fontWeight:"bold"}}  className="btn m-2 col-xl-5 col-sm-12  btn-primary ">Register</button>
-                                                    <a role="button" aria-pressed="true" className="btn m-2  col-xl-5 col-sm-12 btn-danger "> <i  className="fa fa-google-plus fa-lg me-3 fa-fw text-white"></i></a>
+                                                    <a href="http://localhost:5000/auth/google"  role="button" aria-pressed="true" className="btn m-2  col-xl-5 col-sm-12 btn-danger "> <i  className="fa fa-google-plus fa-lg me-3 fa-fw text-white"></i></a>
                                                 </div>
 
 
