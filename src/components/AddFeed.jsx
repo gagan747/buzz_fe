@@ -15,8 +15,6 @@ function AddFeed() {
       // formdata.append("createdBy", createdBy);
       if (selectedFile)
         formdata.append("photos", selectedFile, selectedFile.name);
-      // console.log("upload", formdata, selectedFile.name);
-
       try {
         const response = await fetch("http://localhost:3000/api/feed", {
           method: "POST",
@@ -84,4 +82,3 @@ function AddFeed() {
 }
 
 export default AddFeed;
-
