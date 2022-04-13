@@ -18,8 +18,7 @@ export default function Signup() {
     const navigate=useNavigate();
     const dataentry = (e) => {
         setState({ ...state, [e.target.name]: e.target.value });
-    }
-
+      }
     const [showpassword, setShowpassword] = useState(false)
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -31,7 +30,7 @@ export default function Signup() {
             return handleError("password");
             if(validateDate())
                register();
- }
+             }
     const validateDate=()=>{
         let dob=state.dob.split("-");
         let date=dob[2];
@@ -43,16 +42,12 @@ export default function Signup() {
         age--;
         else if(+presentdate.getMonth()-month===0 && +presentdate.getDate()-date<0)
         age--;
-        
              if(age<14){
              handleError("dob");
              return false;}
              return true;
-       
-        
-
-      }
-    async function register() {
+             }
+       async function register() {
        try{ const response = await fetch('http://localhost:3000/api/register', {
             method: 'POST',
             headers: {
@@ -78,9 +73,7 @@ export default function Signup() {
         setTimeout(() => { a.style.display = "none" }, 2000);
 
     }
-
-
-    return (
+      return (
 
         <>
             <div className="vh-100" style={{ backgroundColor: "#eee" }}>
@@ -182,7 +175,7 @@ export default function Signup() {
 
                                                 <div className=" row   justify-content-around mx-4 mb-3 mb-lg-4">
                                                     <button type="submit"style={{fontWeight:"bold"}}  className="btn m-2 col-xl-5 col-sm-12  btn-primary ">Register</button>
-                                                    <a role="button" aria-pressed="true" className="btn m-2  col-xl-5 col-sm-12 btn-danger "> <i  className="fa fa-google-plus fa-lg me-3 fa-fw text-white"></i></a>
+                                                    <a href="http://localhost:5000/auth/google" role="button" aria-pressed="true" className="btn m-2  col-xl-5 col-sm-12 btn-danger "> <i  className="fa fa-google-plus fa-lg me-3 fa-fw text-white"></i></a>
                                                 </div>
 
 
