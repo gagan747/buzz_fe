@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import {Link, useNavigate} from "react-router-dom"
+
 export default function Login() {
     const [showpassword, setShowpassword] = useState(false);
     const [state, setState] = useState({
         email: "",
         password: ""
     });
-
+    const navigate=useNavigate();
     const dataentry = (e) => {
         setState({ ...state, [e.target.name]: e.target.value });
 
@@ -25,8 +27,10 @@ export default function Login() {
 
             const data = await response.json();
 
-            if (response.status == 200)
+            if (response.status == 200){
                 toast.success(data.message);
+                navigate("/home");
+            }
             else
                 toast.error(data.message);
         } catch (err) {
@@ -66,14 +70,17 @@ return (
                                                     }} className="d-inline fa fa-eye "></i>
                                                 </div>
                                                     <div style={{ margin: "50px" }} className=" row justify-content-around mx-4 mb-5  mb-lg-4">
-                                                    <button type="submit" className="btn m-2 col-xl-5 col-sm-12  btn-primary ">Login</button>
-                                                    <button type="button" className="btn m-2  col-xl-5 col-sm-12 btn-danger "> <i className="fa fa-google-plus fa-lg me-3 fa-fw"></i></button>
-                                                </div> </form>
+                                                    <button type="submit"  style={{fontWeight:"bold"}} className="btn m-2 col-xl-5 col-sm-12  btn-primary ">Login</button>
+                                                    <a href="http://localhost:5000/auth/google" role="button" aria-pressed="true" className="btn m-2  col-xl-5 col-sm-12 btn-danger "> <i  className="fa fa-google-plus fa-lg me-3 fa-fw text-white"></i></a>
+                                                </div>
+                                                <div style={{ margin: "50px" }} className=" row justify-content-around mx-4 mb-5  mb-lg-4"><Link to="/forgotpassword" >Forgot password?</Link></div>
+                                                 </form>
+
                                                     </div>
                                         <div class="d-flex flex-column  my-5 col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
                                             <img src="https://www.socialsamosa.com/wp-content/uploads/2013/09/image001-1.jpg" class="img-fluid rounded" alt="https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/v1473843963/cdy69xpmmkjntymhbxpa.png" />
-                                            <p className="text-center mt-5  mx-1 mx-md-5 mb-4 ">Don't have an account?<a href="#">Register</a></p>
+                                            <p className="text-center mt-5 h5 mx-1 mx-md-5 mb-4 ">Don't have an account?<Link to="/signup">Register</Link></p>
 
                                         </div>
 

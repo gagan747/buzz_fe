@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import {Link,useNavigate} from "react-router-dom"
 
 export default function Signup() {
-
     const [state, setState] = useState({
         firstname: "",
         lastname: "",
@@ -15,6 +15,7 @@ export default function Signup() {
         dob: ""
 
     });
+    const navigate=useNavigate();
     const dataentry = (e) => {
         setState({ ...state, [e.target.name]: e.target.value });
     }
@@ -52,7 +53,7 @@ export default function Signup() {
 
       }
     async function register() {
-       try{ const response = await fetch('http://localhost:5000/api/register', {
+       try{ const response = await fetch('http://localhost:3000/api/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -60,11 +61,13 @@ export default function Signup() {
             body: JSON.stringify(state),
         });
 
-        const data1 = await response.json();
-        if(response.status==201)
-        toast.success(data1.message);
+        const data = await response.json();
+        if(response.status==201){
+        toast.success(data.message);
+        navigate("/home");
+        }
         else
-        toast.error(""+data1.message);
+        toast.error(""+data.message);
     }catch(err){
         toast.error("Something went wrong");
     }
@@ -178,8 +181,8 @@ export default function Signup() {
 
 
                                                 <div className=" row   justify-content-around mx-4 mb-3 mb-lg-4">
-                                                    <button type="submit" className="btn m-2 col-xl-5 col-sm-12  btn-primary ">Register</button>
-                                                    <button type="button" className="btn m-2  col-xl-5 col-sm-12 btn-danger "> <i className="fa fa-google-plus fa-lg me-3 fa-fw"></i></button>
+                                                    <button type="submit"style={{fontWeight:"bold"}}  className="btn m-2 col-xl-5 col-sm-12  btn-primary ">Register</button>
+                                                    <a role="button" aria-pressed="true" className="btn m-2  col-xl-5 col-sm-12 btn-danger "> <i  className="fa fa-google-plus fa-lg me-3 fa-fw text-white"></i></a>
                                                 </div>
 
 
@@ -191,7 +194,7 @@ export default function Signup() {
                                         <div class="d-flex flex-column  my-5 col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
                                             <img src="https://www.socialsamosa.com/wp-content/uploads/2013/09/image001-1.jpg" class="img-fluid rounded" alt="https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/v1473843963/cdy69xpmmkjntymhbxpa.png" />
-                                            <p className="text-center h5 mt-5 mx-1 mx-md-5 mb-4 ">Have an account?<a href="#">Login</a></p>
+                                            <p className="text-center h5 mt-5 mx-1 mx-md-5 mb-4 ">Have an account?<Link to="/login">Login</Link></p>
 
                                         </div>
 
