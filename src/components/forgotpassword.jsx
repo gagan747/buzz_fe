@@ -83,8 +83,9 @@ export default function Forgotpassword() {
                                                     <i className={otpstate ? "fa fa-circle fa-lg me-3 fa-fw" : "fa fa-spinner fa-spin fa-lg me-sm-3 me-l-3 me-xl-0 fa-fw"}></i>
                                                     <div className="col-10 form-outline flex-fill mb-0">
                                                         <input name="otp" type="text" className="form-control  ml-xl-0 border-top-0 border-left-0 border-right-0" placeholder="OTP" onChange={(e) => { dataentry(e) }} required />
-
-                                                    </div><button type="button" className="btn col-xl-2 col-sm-2 ml-xl-4 btn-success btn-sm rounded-pill" onClick={() => {
+                                                        
+                                                    </div>
+                                                    <button type="button"  className="btn col-xl-2 col-sm-2 ml-xl-4 btn-success btn-sm rounded-pill" onClick={() => {
                                                         setOtpstate(!otpstate);
                                                         handleSend()
                                                     }}>Send</button>
@@ -92,12 +93,12 @@ export default function Forgotpassword() {
 
                                                 <div className="d-flex flex-row align-items-center  mb-2">
                                                     <i className="fa fa-lock fa-lg me-3 fa-fw "></i>
-                                                    <div className="form-outline flex-fill mb-0">
-                                                        <input type={showpassword ? "text" : "password"} name="newpassword" className="form-control  border-top-0 border-left-0 border-right-0" placeholder="new password" onChange={(e) => { dataentry(e) }} required />
+                                                    <div className="form-outline  mb-0">
+                                                        <input type={showpassword ? "text" : "password"}   name="newpassword" className="form-control  border-top-0 border-left-0 border-right-0" placeholder="new password" onChange={(e) => { dataentry(e) }} required />
 
                                                     </div><i onClick={(e) => {
                                                         setShowpassword(!showpassword)
-                                                    }} className="d-inline fa fa-eye  fa-lg  fa-fw ml-xl-4 "></i>
+                                                    }} className="fa fa-eye  fa-lg  fa-fw ml-xl-0 "></i>
                                                 </div>
                                                 <div style={{ margin: "50px" }} className=" row justify-content-around mx-4 mb-5  mb-lg-4">
                                                     <button type="submit" style={{ fontWeight: "bold" }} className="btn btn-sm m-2 col-xl-7 col-sm-12  btn-primary  rounded-pill ">Reset Password</button>
@@ -110,8 +111,7 @@ export default function Forgotpassword() {
                                             <p className="text-center mt-5 h4 mx-1 mx-md-5 mb-4 ">Don't have an account?<Link to="/signup">Register</Link></p>
 
                                         </div>
-
-                                    </div>
+                                       </div>
                                 </div>
                             </div>
                         </div>

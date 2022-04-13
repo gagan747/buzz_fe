@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import {Link, useNavigate} from "react-router-dom"
 
-export default function Login() {
+export default function Login({error}) {
+    if(error){
+        toast.error(error);
+    }
     const [showpassword, setShowpassword] = useState(false);
     const [state, setState] = useState({
         email: "",

@@ -21,6 +21,7 @@ function App() {
           <Route path="/forgotpassword" element={<Forgotpassword />} />
           <Route path="/*" element={<NotFound />} />
           <Route path="/home" element={<> <Home /> <FriendBar /> </>} />
+          <Route path="/login/:error" element={<Login  error="Not a valid TTN mail" />}/>
         </Routes>
         <ToastContainer />
       </Router>
