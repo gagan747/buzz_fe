@@ -1,8 +1,9 @@
 import "./addfeed.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImages } from "@fortawesome/free-solid-svg-icons";
-import { useState, useContext } from "react";
+import { useState ,useEffect,useContext} from "react";
 import { toast } from "react-toastify";
+import {  useNavigate } from "react-router-dom";
 import { feedContext } from "./Feed"
 
 function AddFeed() {
@@ -10,8 +11,8 @@ function AddFeed() {
   const obj = useContext(feedContext);
   const [text, setText] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-
-  const createdBy = "ayushsaxena";
+  const [profileImg,setProfileImg]=useState(null)
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (text) {
@@ -44,6 +45,26 @@ function AddFeed() {
   const imageUploader = (x) => {
     setSelectedFile(x);
   };
+  const islogged = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/home", {
+        method: "GET",
+      });
+
+      const data = await response.json();
+      console.log(data);
+      setProfileImg(data.profileImg)
+      if (response.status === 307) {
+        navigate("/login");
+        toast.error("User Not logged In");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    islogged();
+  }, []);
 
   return (
     <>
@@ -51,7 +72,11 @@ function AddFeed() {
         <div className="addFeedWrapper">
           <form onSubmit={handleSubmit}>
             <div className="addFeedTop d-flex align-items-center">
-              <img className="addFeedImg" src="/assets/p1.jpg" alt="profileImg" />
+              <img
+                className="addFeedImg"
+                src={profileImg}
+                alt="profileImg"
+              />
               <input
                 type="text"
                 placeholder="start a post"
@@ -86,12 +111,8 @@ function AddFeed() {
             </div>
           </form>
         </div>
-
       </div>
-
-
     </>
-
   );
 }
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import {Link,useNavigate} from "react-router-dom"
-
+import './signup.css'
 
 export default function Signup() {
     const [state, setState] = useState({
