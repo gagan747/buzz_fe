@@ -1,6 +1,6 @@
 import FriendBar from './components/FriendBar';
 import './App.css';
-import React from "react"
+import React,{useState} from "react"
 import Login from "./components/login.jsx"
 import Signup from "./components/signup.jsx"
 import { ToastContainer } from 'react-toastify';
@@ -10,11 +10,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Home from "./pages/Home.js";
 import NotFound from "./pages/notfound.jsx"
 
-
 function App() {
   return (
     <>
-      <Router>
+       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/Signup" element={<Signup />} />
@@ -25,8 +24,6 @@ function App() {
         </Routes>
         <ToastContainer />
       </Router>
-    </>);
+ </>);
 }
-
 export default App;
-

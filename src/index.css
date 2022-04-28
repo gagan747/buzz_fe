@@ -14,12 +14,12 @@ code {
 @media only screen and (min-width: 770px){
 input[type="date"]::-webkit-calendar-picker-indicator {
   position: absolute;
-  left: 17px;
+  left: 41px;
 }
 
 input::-webkit-datetime-edit {
   position: relative;
-  right:5px;
+  right:px;
 
   
 }
@@ -32,18 +32,19 @@ input::-webkit-datetime-edit-fields-wrapper {
 @media only screen and (max-width: 755px){
   input[type="date"]::-webkit-calendar-picker-indicator {
     position: absolute;
-    left: -3px;
+    left: 21px;
   }
   
   input::-webkit-datetime-edit {
     position: relative;
-    right:5px;
+    right:px;
   
     
   }
   
   input::-webkit-datetime-edit-fields-wrapper {
     position: relative;
-    left:30px;
+    left:10px;
     
   }}
+  

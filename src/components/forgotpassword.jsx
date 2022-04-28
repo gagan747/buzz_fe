@@ -1,21 +1,22 @@
 import React from 'react'
-import { useState, useRef } from "react"
+import { useform, useRef, useState } from "react"
 import { toast } from 'react-toastify';
-import {Link} from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 export default function Forgotpassword() {
-    const [otpstate, setOtpstate] = useState(true);
+    const [loading, setLoading] = useState(true);
     const [showpassword, setShowpassword] = useState(false);
-    const [state, setState] = useState({
+    const [form, setForm] = useState({
         email: "",
         password: "",
         otp: ""
     });
+    const navigate = useNavigate();
     const emailhandle = useRef(null);
-    const dataentry = (e) => {
-        setState({ ...state, [e.target.name]: e.target.value });
+    const formdata = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
     }
-         const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         try {
             e.preventDefault();
             const response = await fetch('http://localhost:3000/api/forgotpassword', {
@@ -23,18 +24,20 @@ export default function Forgotpassword() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(state),
+                body: JSON.stringify(form),
             });
-           const data = await response.json();
-            if (response.status == 201)
+            const data = await response.json();
+            if (response.status == 201) {
                 toast.success(data.message);
+                navigate("/login")
+            }
             else
                 toast.error(data.message);
         } catch (err) {
             toast.error("Something went wrong");
         }
     }
-         const handleSend = async (e) => {
+    const handleSend = async (e) => {
         try {
             if (!emailhandle.current.value)
                 return toast.error("Email can;t be empty");
@@ -44,16 +47,16 @@ export default function Forgotpassword() {
                     'Content-Type': 'application/json',
                 },
 
-                body: JSON.stringify({ email: state.email }),
+                body: JSON.stringify({ email: form.email }),
             });
-          const data = await response.json();
-            setOtpstate(true);
+            const data = await response.json();
+            setLoading(true);
             if (response.status == 201)
                 toast.success(data.message);
             else
                 toast.error(data.message);
         } catch (err) {
-            setOtpstate(true);
+            setLoading(true);
             toast.error("Something went wrong");
         }
     }
@@ -75,26 +78,27 @@ export default function Forgotpassword() {
                                                 <div className="d-flex flex-row align-items-center mb-2">
                                                     <i className="fa fa-envelope fa-lg me-3 fa-fw"></i>
                                                     <div className="form-outline flex-fill mb-0">
-                                                        <input name="email" type="email" ref={emailhandle} className="form-control border-top-0 border-left-0 border-right-0" placeholder="Email" onChange={(e) => { dataentry(e) }} required />
+                                                        <input name="email" type="email" ref={emailhandle} className="form-control border-top-0 border-left-0 border-right-0" placeholder="Email" onChange={(e) => { formdata(e) }} required />
 
                                                     </div>
                                                 </div>
                                                 <div className="d-flex flex-row align-items-center mb-2">
-                                                    <i className={otpstate ? "fa fa-circle fa-lg me-3 fa-fw" : "fa fa-spinner fa-spin fa-lg me-sm-3 me-l-3 me-xl-0 fa-fw"}></i>
+                                                    <i className={loading ? "fa fa-circle fa-lg me-3 fa-fw" : "fa fa-spinner fa-spin fa-lg me-sm-3 me-l-3 me-xl-0 fa-fw"}></i>
                                                     <div className="col-10 form-outline flex-fill mb-0">
-                                                        <input name="otp" type="text" className="form-control  ml-xl-0 border-top-0 border-left-0 border-right-0" placeholder="OTP" onChange={(e) => { dataentry(e) }} required />
-                                                        
+                                                        <input name="otp" type="text" className="form-control  ml-xl-0 border-top-0 border-left-0 border-right-0" placeholder="OTP" onChange={(e) => { formdata(e) }} required />
+
                                                     </div>
-                                                    <button type="button"  className="btn col-xl-2 col-sm-2 ml-xl-4 btn-success btn-sm rounded-pill" onClick={() => {
-                                                        setOtpstate(!otpstate);
+                                                    <button type="button" className="btn col-xl-2 col-sm-2 ml-xl-4 btn-success btn-sm rounded-pill" onClick={() => {
                                                         handleSend()
+                                                        setLoading(!loading);
+
                                                     }}>Send</button>
                                                 </div>
 
                                                 <div className="d-flex flex-row align-items-center  mb-2">
                                                     <i className="fa fa-lock fa-lg me-3 fa-fw "></i>
                                                     <div className="form-outline  mb-0">
-                                                        <input type={showpassword ? "text" : "password"}   name="newpassword" className="form-control  border-top-0 border-left-0 border-right-0" placeholder="new password" onChange={(e) => { dataentry(e) }} required />
+                                                        <input type={showpassword ? "text" : "password"} name="newpassword" className="form-control  border-top-0 border-left-0 border-right-0" placeholder="new password" onChange={(e) => { formdata(e) }} required />
 
                                                     </div><i onClick={(e) => {
                                                         setShowpassword(!showpassword)
@@ -111,7 +115,7 @@ export default function Forgotpassword() {
                                             <p className="text-center mt-5 h4 mx-1 mx-md-5 mb-4 ">Don't have an account?<Link to="/signup">Register</Link></p>
 
                                         </div>
-                                       </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
