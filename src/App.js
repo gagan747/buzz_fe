@@ -9,7 +9,7 @@ import Forgotpassword from "./components/forgotpassword.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Home from "./pages/Home.js";
 import NotFound from "./pages/notfound.jsx"
-
+import UserProfile from './components/userProfile/UserProfile';
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
           <Route path="/forgotpassword" element={<Forgotpassword />} />
           <Route path="/*" element={<NotFound />} />
           <Route path="/home" element={<> <Home /> <FriendBar /> </>} />
+          <Route path='/userProfile' element={<UserProfile/>} />
         </Routes>
         <ToastContainer />
       </Router>

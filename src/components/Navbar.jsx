@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../components/navbar.css";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBell,
@@ -10,6 +10,7 @@ import {
 import { toast } from "react-toastify";
 function Navbar() {
   const [name, setName] = useState("");
+  const [profileImg, setProfileImg] = useState(null);
   const navigate = useNavigate();
   const islogged = async () => {
     try {
@@ -19,7 +20,8 @@ function Navbar() {
 
       const data = await response.json();
       console.log(data);
-      setName(data.fName + " " + data.lName)
+      setName(data.fName + " " + data.lName);
+      setProfileImg(data.profileImg);
       if (response.status === 307) {
         navigate("/login");
         toast.error("User Not logged In");
@@ -58,7 +60,10 @@ function Navbar() {
             <FontAwesomeIcon icon={faEnvelope}></FontAwesomeIcon>
             <span className="badge">10</span>
           </a>{" "}
-          <span className="user">{name}</span>
+          <Link to={"/userProfile"}>
+            <img className="addFeedImg" src={profileImg} alt="profileImg" />
+            <span className="user">{name}</span>
+          </Link>
         </div>
       </nav>
     </>
