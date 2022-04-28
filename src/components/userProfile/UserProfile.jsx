@@ -201,7 +201,7 @@ function UserProfile() {
                   <input
                     type="file"
                     name="photos"
-                    className="fileSelect"
+                    className="file"
                     id="file"
                     accept=".jpg, .jpeg, .png"
                     onChange={(e) => {
@@ -279,7 +279,7 @@ function UserProfile() {
                         Date Of Birth
                       </label>
                       <input
-                        className="form-control"
+                        className="form-control date"
                         id="inputBirthday"
                         type="date"
                         name="dob"

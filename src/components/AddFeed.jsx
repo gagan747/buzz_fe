@@ -1,15 +1,18 @@
 import "./addfeed.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImages } from "@fortawesome/free-solid-svg-icons";
-import { useState ,useEffect} from "react";
+import { useState ,useEffect,useContext} from "react";
 import { toast } from "react-toastify";
 import {  useNavigate } from "react-router-dom";
+import { feedContext } from "./Feed"
+
 function AddFeed() {
+  console.log("from add feed");
+  const obj = useContext(feedContext);
   const [text, setText] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [profileImg,setProfileImg]=useState(null)
   const navigate = useNavigate();
-  // const createdBy = "ayushsaxena";
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (text) {
@@ -18,6 +21,7 @@ function AddFeed() {
       // formdata.append("createdBy", createdBy);
       if (selectedFile)
         formdata.append("photos", selectedFile, selectedFile.name);
+
       try {
         const response = await fetch("http://localhost:3000/api/feed", {
           method: "POST",
@@ -27,7 +31,9 @@ function AddFeed() {
         const data = await response.json();
         if (response.status === 201) {
           toast.success(data.message);
-          console.log(data.feed);
+          obj.update(data.feed);
+          return;
+
         } else toast.error(data.message);
       } catch (error) {
         toast.error(error);
