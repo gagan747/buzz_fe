@@ -64,3 +64,20 @@ body {
 .user{
 	margin-top: 7px;
 }
+.suggestions{
+	position:absolute;
+	left:200px;
+	top:50px;
+	width:297px;
+	min-height:0px;
+	max-height:400px;
+	background-color:white;
+	overflow:auto;
+	
+
+	
+}
+.image{
+	border-radius:20px;
+	
+}
