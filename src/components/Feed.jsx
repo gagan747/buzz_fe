@@ -7,8 +7,7 @@ const feedContext=createContext();
 export {feedContext};
 
 function Feed() {
-  console.log("from feeds")
-  const [feeds,setFeeds]=useState([]);
+   const [feeds,setFeeds]=useState([]);
   const update=(data)=>{
   setFeeds([data,...feeds]);
   }   
