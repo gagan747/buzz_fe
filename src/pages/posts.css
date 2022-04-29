@@ -60,3 +60,6 @@
 .postimage{
     object-fit:cover ;
 }
+.liked{
+  color: blue;
+}
