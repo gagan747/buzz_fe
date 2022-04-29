@@ -64,5 +64,7 @@
 .optionsbutton{
   position:absolute;
   left:1180px
-  
+}
+.liked{
+  color: blue;
 }
