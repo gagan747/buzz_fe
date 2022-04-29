@@ -29,7 +29,8 @@ export default function Post({ post }) {
              const result = await response.json();
             if (response.status == 200) {
                 toast.success(result.message);
-                feeds.deletefeed();
+                console.log(feeds.pageIndex)
+                feeds.deletefeed(feeds.pageIndex);
                  } 
               else if (response.status === 307) {
                 navigate("/login");
@@ -39,7 +40,7 @@ export default function Post({ post }) {
                 toast.error(result.message);
         } catch (err) {
             toast.error("Something went wrong");
-            console.log(err);
+            // console.log(err);
         }
   };
   const handleComment = async () => {

@@ -7,7 +7,6 @@ import {  useNavigate } from "react-router-dom";
 import { feedContext } from "./Feed"
 
 function AddFeed() {
-  console.log("from add feed");
   const obj = useContext(feedContext);
   const [text, setText] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
