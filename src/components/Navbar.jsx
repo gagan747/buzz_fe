@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { userContext } from "../pages/Home";
 
 function Navbar() {
-  const globaluser = useContext(userContext);
+  const currentuser = useContext(userContext);
   const [name, setName] = useState("");
   const [profileImg, setProfileImg] = useState(null);
   const [isModerator, setIsModerator] = useState(false);
@@ -31,7 +31,7 @@ function Navbar() {
       setName(data.fName + " " + data.lName);
       setIsModerator(data.is_Admin);
       setProfileImg(data.profileImg);
-      globaluser.update(data.profile_img, data.is_Admin, data.user_id);
+      currentuser.update(data.profile_img, data.is_Admin, data.user_id);
     } catch (error) {
       toast.error("Something went wrong");
     }
@@ -80,7 +80,7 @@ function Navbar() {
         <a className="navbar-brand">BUZZ</a>
         <span className="navbar-brand">{isModerator ? "MODERATOR" : ""}</span>
         <form className="navbar-form form-inline">
-          <div className="input-group search-box">
+         <div className="suggestion-controller"> <div className="input-group search-box">
             <input
               type="text"
               id="search"
@@ -103,10 +103,10 @@ function Navbar() {
                     height="40px"
                   />
                   <span>{e.firstname + " " + e.lastname}</span>
-                </div>
+                </div> 
               );
             })}
-          </div>
+          </div></div>
         </form>
         <div className="navbar-nav ml-auto ">
           <a className="nav-item nav-link notifications">

@@ -8,24 +8,24 @@ export { feedContext };
 let feedCount=0;
 
 function Feed() {
-  const pageLimit=10
-  const pageNumber=1
-  const [feeds, setFeeds] = useState([]);
-  const update = (data) => {
-    setFeeds([data, ...feeds]);
-    feedCount=feeds.length+1;
-  };
-  const updatefeed = (updatedfeed) => {
-    feeds.map((feed) => {
-      if (feed._id === updatedfeed._id) feed.flagCount = updatedfeed.flagCount;
-      feed.likeCount = updatedfeed.likeCount;
-    });
-  };
-  const deletefeed = (id) => {
-    setFeeds(feeds.filter((feed) => feed._id !== id));
-    feedCount=feeds.length-1;
-  };
-  useEffect(() => {
+  const pageLimit=10;
+  const pageNumber=1;
+  
+   const [feeds,setFeeds]=useState([]);
+  const addfeed=()=>{
+  postload();
+  }   
+    const updatefeed=(updatedfeed)=>{
+    feeds.map((feed)=>{
+   if(feed._id===updatedfeed._id)
+   feed.flagCount=updatedfeed.flagCount;
+   })}
+    const deletefeed=()=>{
+   postload();
+    }
+ 
+  
+   useEffect(() => {
     postload();
   }, []);
   const postload = async () => {
@@ -45,12 +45,11 @@ function Feed() {
   };
 
   return (
-    <feedContext.Provider value={{ feeds, update, deletefeed, updatefeed,feedCount}}>
-      <div className="d-flex flex-column justify-content-center align-items-center">
-        <AddFeed />
-      </div>
-      <POSTS />
-      {/* <Pagination/> */}
+     <feedContext.Provider value={{feeds,addfeed,deletefeed,updatefeed}}>
+     <div className="d-flex flex-column justify-content-center align-items-center">
+      <AddFeed />
+     </div>
+     <POSTS />
     </feedContext.Provider>
   );
 }

@@ -31,7 +31,7 @@ function AddFeed() {
         const data = await response.json();
         if (response.status === 201) {
           toast.success(data.message);
-          obj.update(data.feed);
+          obj.addfeed();
           return;
 
         } else toast.error(data.message);
@@ -52,7 +52,7 @@ function AddFeed() {
       });
 
       const data = await response.json();
-      console.log(data);
+     
       setProfileImg(data.profileImg)
       if (response.status === 307) {
         navigate("/login");
