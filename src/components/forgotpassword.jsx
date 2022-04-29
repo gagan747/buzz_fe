@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { Link, useNavigate } from "react-router-dom"
 
 export default function Forgotpassword() {
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [showpassword, setShowpassword] = useState(false);
     const [form, setForm] = useState({
         email: "",
@@ -40,7 +40,8 @@ export default function Forgotpassword() {
     const handleSend = async (e) => {
         try {
             if (!emailhandle.current.value)
-                return toast.error("Email can;t be empty");
+             return toast.error("Email can't be empty");  
+             setLoading(true)  
             const response = await fetch('http://localhost:3000/api/forgotpassword/otpgenerator', {
                 method: 'POST',
                 headers: {
@@ -50,13 +51,13 @@ export default function Forgotpassword() {
                 body: JSON.stringify({ email: form.email }),
             });
             const data = await response.json();
-            setLoading(true);
-            if (response.status == 201)
+            setLoading(false);
+            if (response.status === 201)
                 toast.success(data.message);
             else
                 toast.error(data.message);
         } catch (err) {
-            setLoading(true);
+            setLoading(false);
             toast.error("Something went wrong");
         }
     }
@@ -83,16 +84,14 @@ export default function Forgotpassword() {
                                                     </div>
                                                 </div>
                                                 <div className="d-flex flex-row align-items-center mb-2">
-                                                    <i className={loading ? "fa fa-circle fa-lg me-3 fa-fw" : "fa fa-spinner fa-spin fa-lg me-sm-3 me-l-3 me-xl-0 fa-fw"}></i>
+                                                    <i className={loading ?  "fa fa-spinner fa-spin fa-lg me-sm-3 me-l-3 me-xl-0 fa-fw" : "fa fa-circle fa-lg me-3 fa-fw"}></i>
                                                     <div className="col-10 form-outline flex-fill mb-0">
                                                         <input name="otp" type="text" className="form-control  ml-xl-0 border-top-0 border-left-0 border-right-0" placeholder="OTP" onChange={(e) => { formdata(e) }} required />
 
                                                     </div>
                                                     <button type="button" className="btn col-xl-2 col-sm-2 ml-xl-4 btn-success btn-sm rounded-pill" onClick={() => {
                                                         handleSend()
-                                                        setLoading(!loading);
-
-                                                    }}>Send</button>
+                                                     }} disabled={loading}>Send</button>
                                                 </div>
 
                                                 <div className="d-flex flex-row align-items-center  mb-2">

@@ -28,7 +28,7 @@ import {  useNavigate } from "react-router-dom";
              const result = await response.json();
             if (response.status == 200) {
                 toast.success(result.message);
-                feeds.deletefeed(post._id);
+                feeds.deletefeed();
                  } 
               else if (response.status === 307) {
                 navigate("/login");
@@ -78,22 +78,22 @@ import {  useNavigate } from "react-router-dom";
             toast.error("Something went wrong");
             console.log(err);
         }}
-    const handleModerator=async ()=>{
+           const handleModerator=async ()=>{
            try {
             const response = await fetch(`http://localhost:3000/api/deletepost/${post._id}`, { method: "DELETE" });
             const result = await response.json();
-            if (response.status == 200) {
+            if (response.status === 200) {
                 toast.success(result.message);
-                feeds.deletefeed(post._id);
-                 } 
+                feeds.deletefeed();
+               } 
             else if (response.status === 307) {
                 navigate("/login");
                 toast.error("User Not logged In");
-              } 
-            else
+                } 
+              else
                 toast.error(result.message);
-        }
-         catch (err) {
+                }
+            catch(err) {
             toast.error("Something went wrong");
             console.log(err);
         }}
@@ -107,7 +107,7 @@ import {  useNavigate } from "react-router-dom";
                     <div className='postcreator'>
                             <span>  <img className="image" src={post.createdBy.profile_img} width="40px" height="40px" />
                             <span style={{ marginLeft: "8px" }}>{post.createdBy.firstname + " " + post.createdBy.lastname}</span>
-                        </span>{ (currentuser.user.is_Admin) && (<span className='moderator-options'><i  onClick={handleModerator} className="fa fa-times text-danger" aria-hidden="true"></i><i class="fa fa-flag text-danger" aria-hidden="true">  :{post.flagCount.length}</i></span>) || <span  className='options-dropdown'><span onClick={() => { setOptionstoggle(!optionstoggle) }}>...</span>{ optionstoggle && <span >{ ((currentuser.user.user_id === post.createdBy._id) && <button onClick={deletePost} type="button" className="btn btn-secondary btn-sm" >Delete</button>) || <button  onClick={handleFlag} type="button" className=' px-2 btn btn-danger btn-sm'>{(post.flagCount.indexOf(currentuser.user.user_id) !== -1) && "Unflag" || "Mark as Flag"}</button>} </span>}</span>
+                        </span>{ (currentuser.user.is_Admin) && (<span className='moderator-options'><i  onClick={handleModerator} className="fa fa-times text-danger" aria-hidden="true"></i>{post.flagCount.length && (<i class="fa fa-flag text-danger" aria-hidden="true">  :{post.flagCount.length}</i>) || ""}</span>) || <span  className='options-dropdown'><span onClick={() => { setOptionstoggle(!optionstoggle) }}>...</span>{ optionstoggle && <span >{ ((currentuser.user.user_id === post.createdBy._id) && <button onClick={deletePost} type="button" className="btn btn-secondary btn-sm optionsbutton" >Delete</button>) || <button  onClick={handleFlag} type="button" className=' px-2 btn btn-danger btn-sm optionsbutton'>{(post.flagCount.indexOf(currentuser.user.user_id) !== -1) && "Unflag" || "Mark as Flag"}</button>} </span>}</span>
                                } 
                           </div>
                           <div className="posttext">{post.text} </div>

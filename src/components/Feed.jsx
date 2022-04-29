@@ -8,16 +8,16 @@ export {feedContext};
 
 function Feed() {
    const [feeds,setFeeds]=useState([]);
-  const update=(data)=>{
-  setFeeds([data,...feeds]);
+  const addfeed=()=>{
+  postload();
   }   
     const updatefeed=(updatedfeed)=>{
     feeds.map((feed)=>{
    if(feed._id===updatedfeed._id)
    feed.flagCount=updatedfeed.flagCount;
    })}
-    const deletefeed=(id)=>{
-    setFeeds(feeds.filter((feed) => feed._id !== id));
+    const deletefeed=()=>{
+   postload();
     }
     useEffect(() => {
      postload();
@@ -33,7 +33,7 @@ const postload = async () => {
 }}
 
   return (
-     <feedContext.Provider value={{feeds,update,deletefeed,updatefeed}}>
+     <feedContext.Provider value={{feeds,addfeed,deletefeed,updatefeed}}>
      <div className="d-flex flex-column justify-content-center align-items-center">
       <AddFeed />
      </div>
