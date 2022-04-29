@@ -7,7 +7,6 @@ import {  useNavigate } from "react-router-dom";
 import { feedContext } from "./Feed"
 
 function AddFeed() {
-  console.log("from add feed");
   const obj = useContext(feedContext);
   const [text, setText] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
@@ -31,7 +30,7 @@ function AddFeed() {
         const data = await response.json();
         if (response.status === 201) {
           toast.success(data.message);
-          obj.update(data.feed);
+          obj.addfeed();
           return;
 
         } else toast.error(data.message);
@@ -52,7 +51,7 @@ function AddFeed() {
       });
 
       const data = await response.json();
-      console.log(data);
+     
       setProfileImg(data.profileImg)
       if (response.status === 307) {
         navigate("/login");

@@ -75,15 +75,19 @@ body {
   margin: 0px 10px 0px 0px;
 }
 .suggestions {
-  position: absolute;
-  left: 200px;
-  top: 50px;
-  width: 297px;
+  position:absolute;
+  min-width: 270px;
   min-height: 0px;
   max-height: 400px;
   background-color: white;
   overflow: auto;
+  margin-top:40px;
 }
 .image {
   border-radius: 20px;
+}
+.suggestion-controller{
+  display:flex;
+  flex-direction: column;
+  
 }

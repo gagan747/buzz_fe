@@ -22,24 +22,26 @@ export default function Post({ post }) {
   const deleteComment = (id) => {
     setCommentsdata(commentsdata.filter((comment) => comment._id !== id));
   };
-  const deletePost = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/api/feed/${post._id}`,
-        { method: "DELETE" }
-      );
-      const result = await response.json();
-      if (response.status == 200) {
-        toast.success(result.message);
-        feeds.deletefeed(post._id);
-      } else if (response.status === 307) {
-        navigate("/login");
-        toast.error("User Not logged In");
-      } else toast.error(result.message);
-    } catch (err) {
-      toast.error("Something went wrong");
-      console.log(err);
-    }
+ 
+    const deletePost = async () => {
+        try {
+             const response = await fetch(`http://localhost:3000/api/feed/${post._id}`, { method: "DELETE" });
+             const result = await response.json();
+            if (response.status == 200) {
+                toast.success(result.message);
+                console.log(feeds.pageIndex)
+                feeds.deletefeed(feeds.pageIndex);
+                 } 
+              else if (response.status === 307) {
+                navigate("/login");
+                toast.error("User Not logged In");
+              } 
+              else
+                toast.error(result.message);
+        } catch (err) {
+            toast.error("Something went wrong");
+            // console.log(err);
+        }
   };
   const handleComment = async () => {
     try {
@@ -118,7 +120,7 @@ export default function Post({ post }) {
       toast.error("Something went wrong");
       console.log(err);
     }
-  };
+  }
   return (
     <>
       <commentContext.Provider
@@ -151,10 +153,10 @@ export default function Post({ post }) {
                   className="fa fa-times text-danger"
                   aria-hidden="true"
                 ></i>
-                <i class="fa fa-flag text-danger" aria-hidden="true">
+               {post.flagCount.length && <i class="fa fa-flag text-danger" aria-hidden="true">
                   {" "}
                   :{post.flagCount.length}
-                </i>
+                </i> || ""}
               </span>
             )) || (
               <span className="options-dropdown">
@@ -168,18 +170,18 @@ export default function Post({ post }) {
                 {optionstoggle && (
                   <span>
                     {(currentuser.user.user_id === post.createdBy._id && (
-                      <button
+                      <button 
                         onClick={deletePost}
                         type="button"
-                        className="btn btn-secondary btn-sm"
+                        className="btn btn-secondary btn-sm optionsbutton"
                       >
                         Delete
                       </button>
                     )) || (
-                      <button
+                      <button 
                         onClick={handleFlag}
                         type="button"
-                        className=" px-2 btn btn-danger btn-sm"
+                        className=" px-2 btn btn-danger btn-sm optionsbutton"
                       >
                         {(post.flagCount.indexOf(currentuser.user.user_id) !==
                           -1 &&

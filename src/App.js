@@ -20,7 +20,7 @@ function App() {
           <Route path="/Signup" element={<Signup />} />
           <Route path="/forgotpassword" element={<Forgotpassword />} />
           <Route path="/*" element={<NotFound />} />
-          <Route path="/home" element={<> <Home /> <FriendBar /> </>} />
+          <Route path="/home" element={<> <Home />  </>} />
           <Route path='/userProfile' element={<UserProfile/>} />
           <Route path="/login/:error" element={<Login  error="Not a valid TTN mail" />}/>
         </Routes>
