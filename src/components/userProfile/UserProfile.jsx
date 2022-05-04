@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../userProfile/UserProfile.css";
 import { toast } from "react-toastify";
+
 function UserProfile() {
   const [email, setEmail] = useState();
   const [data, setData] = useState([]);
@@ -16,6 +17,7 @@ function UserProfile() {
   const [selectedCity, setSelectedCity] = useState();
   const [bio, setBio] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
+  const [loader,setLoader]=useState(false);
   const [profileImg, setProfileImg] = useState(
     "https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8="
   );
@@ -127,6 +129,7 @@ function UserProfile() {
     if (selectedFile)
       formdata.append("profileImg", selectedFile, selectedFile.name);
     try {
+      setLoader(true);
       const response = await fetch(
         "http://localhost:3000/api/userprofile/update",
         {
@@ -139,9 +142,14 @@ function UserProfile() {
       if (response.status === 200) {
         toast.success(data.message);
         console.log(data.updatedUser);
-      } else toast.error(data.message);
-    } catch (error) {
-      toast.error(error);
+        setLoader(false);
+      } else {
+        toast.error(data.message);
+        setLoader(false);
+    }
+   } catch (error) {
+      toast.error("Something wemt wrong");
+      setLoader(false);
     }
   };
 
@@ -393,8 +401,8 @@ function UserProfile() {
                       onChange={handleChange}
                       required
                     />
-                  </div>
-                  <button className="btn btn-primary" type="submit">
+                  </div> {loader && <i className="fa fa-spinner fa-spin fa-lg me-sm-3 me-l-3 me-xl-0 fa-fw"></i>}
+                  <button className="btn btn-primary" type="submit" disabled={loader}>
                     Save changes
                   </button>
                 </div>

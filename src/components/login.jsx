@@ -67,7 +67,7 @@ export default function Login({ error }) {
                         <i onClick={(e) => { setShowpassword(!showpassword);  }} className="d-inline fa fa-eye " />
                       </div>
                       <div style={{ margin: '50px' }} className=" row justify-content-around mx-4 mb-5  mb-lg-4">
-                        <button type="submit" style={{ fontWeight: 'bold' }} className="btn m-2 col-xl-5 col-sm-12  btn-primary ">Login</button>
+                        <button type="submit" style={{ fontWeight: 'bold' }} className="btn m-2 col-xl-5 col-sm-12  btn-primary ">login</button>
                         <a href="http://localhost:5000/auth/google" role="button" aria-pressed="true" className="btn m-2  col-xl-5 col-sm-12 btn-danger ">
                           {' '}
                           <i className="fa fa-google-plus fa-lg me-3 fa-fw text-white" />

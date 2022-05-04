@@ -7,11 +7,11 @@ import {  useNavigate } from "react-router-dom";
 import { feedContext } from "./Feed"
 
 function AddFeed() {
-  console.log("from add feed");
   const obj = useContext(feedContext);
   const [text, setText] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [profileImg,setProfileImg]=useState(null)
+  const [loader,setLoader]=useState(false)
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,6 +23,7 @@ function AddFeed() {
         formdata.append("photos", selectedFile, selectedFile.name);
 
       try {
+        setLoader(true);
         const response = await fetch("http://localhost:3000/api/feed", {
           method: "POST",
           body: formdata,
@@ -32,11 +33,11 @@ function AddFeed() {
         if (response.status === 201) {
           toast.success(data.message);
           obj.addfeed();
-          return;
-
-        } else toast.error(data.message);
+           } else toast.error(data.message);
+           setLoader(false)
       } catch (error) {
         toast.error(error);
+        setLoader(false)
       }
     } else {
       toast.error("text must have 5 characters");
@@ -68,7 +69,7 @@ function AddFeed() {
 
   return (
     <>
-      <div className="addFeed">
+      <div className="addFeed ">
         <div className="addFeedWrapper">
           <form onSubmit={handleSubmit}>
             <div className="addFeedTop d-flex align-items-center">
@@ -105,9 +106,11 @@ function AddFeed() {
                   />
                 </div>
               </label>
-              <button type="submit" className="postButton ">
-                Post
+
+              <button type="submit" className="postButton " disabled={loader}>
+               Post
               </button>
+               {loader && <i className="fa fa-spinner fa-spin fa-lg me-sm-3 me-l-3 me-xl-0 fa-fw"></i>}
             </div>
           </form>
         </div>

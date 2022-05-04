@@ -99,10 +99,11 @@ function Navbar() {
                   <img
                     className="image"
                     src={e.profile_img}
-                    width="40px"
-                    height="40px"
+                    width="34px"
+                    height="34px"
                   />
-                  <span>{e.firstname + " " + e.lastname}</span>
+                  {"  "}
+                  <span className="fullname">{e.firstname + " " + e.lastname}</span>
                 </div> 
               );
             })}
@@ -119,7 +120,7 @@ function Navbar() {
           </a>{" "}
           <Link to={"/userProfile"}>
             <img className="addFeedImg" src={profileImg} alt="profileImg" />
-            <span className="user">{name}</span>
+            <span className="user fullname">{name}</span>
           </Link>
           <a className="user" href="#">
             <strong
