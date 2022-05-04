@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext ,} from "react";
 import "../components/navbar.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate ,useLocation} from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBell,
@@ -9,8 +9,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { userContext } from "../pages/Home";
+import viewProfile from "./viewProfile/ViewProfile";
 
 function Navbar() {
+  let location = useLocation();
+  
   const currentuser = useContext(userContext);
   const [name, setName] = useState("");
   const [profileImg, setProfileImg] = useState(null);
@@ -31,8 +34,10 @@ function Navbar() {
       setName(data.fName + " " + data.lName);
       setIsModerator(data.is_Admin);
       setProfileImg(data.profileImg);
+      if(location.pathname==='/home')
       currentuser.update(data.profile_img, data.is_Admin, data.user_id);
     } catch (error) {
+      console.log(error)
       toast.error("Something went wrong");
     }
   };
@@ -77,7 +82,7 @@ function Navbar() {
   return (
     <>
       <nav className="sticky-top navbar navbar-expand-xl navbar-light bg-light ">
-        <a className="navbar-brand">BUZZ</a>
+      <Link to={"/home"} className="navbar-brand">BUZZ</Link>
         <span className="navbar-brand">{isModerator ? "MODERATOR" : ""}</span>
         <form className="navbar-form form-inline">
          <div className="suggestion-controller"> <div className="input-group search-box">
@@ -110,6 +115,9 @@ function Navbar() {
           </div></div>
         </form>
         <div className="navbar-nav ml-auto ">
+        <Link to={"/viewProfile"}>
+            viewProfile
+          </Link>
           <a className="nav-item nav-link notifications">
             <FontAwesomeIcon icon={faBell}></FontAwesomeIcon>
             <span className="badge">1</span>
