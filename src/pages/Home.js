@@ -1,6 +1,7 @@
 import Navbar from '../components/Navbar'
 import Feed from '../components/Feed'
 import {createContext,useState} from "react";
+import Suggestions from "../components/Suggestions.jsx"
 const userContext=createContext();
 export {userContext};
 
@@ -13,6 +14,7 @@ export {userContext};
       <>
       <userContext.Provider value={{user,update}}>
        <Navbar/>
+       <Suggestions />
        <Feed/>
        </userContext.Provider>
       </>

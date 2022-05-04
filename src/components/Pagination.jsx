@@ -3,9 +3,10 @@ import { feedContext } from "./Feed";
 
 function Pagination() {
   const [render, setRender] = useState(false);
-  const [active, setActive] = useState(1);
+ 
   let arr = [];
   const feedcontext = useContext(feedContext);
+  const [active, setActive] = useState(feedcontext.pageIndex);
   let countPage = feedcontext.feedCount / feedcontext.pageLimit;
   let remPagePost = feedcontext.feedCount % feedcontext.pageLimit;
   if (remPagePost !== 0) countPage += 1;
