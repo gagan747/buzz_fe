@@ -89,5 +89,4 @@ body {
 .suggestion-controller{
   display:flex;
   flex-direction: column;
-  
-}
+  }

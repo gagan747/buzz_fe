@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext,useRef } from 'react';
 import { toast } from 'react-toastify';
 import "./Comments.css";
 import { userContext } from './Home';
@@ -6,14 +6,22 @@ import { commentContext } from './Post';
 import {  useNavigate } from "react-router-dom";
 
 export default function Commentbox({ data }) {
+ 
   const navigate = useNavigate();
   const currentUser = useContext(userContext);
   const obj = useContext(commentContext);
   const [updatetoggle, setUpdatetoggle] = useState(false);
   const [commentdata, setCommentdata] = useState(data.comment);
+  const  inputfocus=useRef(null);
+  
   useEffect(() => {
     setCommentdata(data.comment);
   }, [data.comment]);
+  useEffect(()=>{
+    if(updatetoggle)
+    inputfocus.current.focus();
+  },[updatetoggle])
+  
   const handleDelete = async () => {
   try {
       const result = await fetch(`http://localhost:3000/api/comments/${data._id}`, {
@@ -54,6 +62,7 @@ export default function Commentbox({ data }) {
         }
       }
       setUpdatetoggle(!updatetoggle)
+     
     }
       catch (err) {
       toast.error("Something went wrong");
@@ -69,13 +78,14 @@ export default function Commentbox({ data }) {
         </div>
         <div className="commentedit">
           {
-            (updatetoggle && <input type="text" className="toggleinput" value={commentdata} onChange={(e) => { setCommentdata(e.target.value) }} />) || (<p> {commentdata}
+            (updatetoggle && <input ref={inputfocus} type="text" className="toggleinput" value={commentdata} onChange={(e) => { setCommentdata(e.target.value) }} />) || (<p> {commentdata}
             </p>)
           }
-          {(data.user_Id._id === currentUser.user.user_id) && <><div className="icon-spacing"><i onClick={handleUpdate} class={(updatetoggle && "updatebutton") || "fa fa-pencil"} aria-hidden="true">{updatetoggle && "Update"}</i>
+          {(data.user_Id._id === currentUser.user.user_id) && <><div className="icon-spacing"><i onClick={handleUpdate} className={(updatetoggle && "updatebutton") || "fa fa-pencil"} aria-hidden="true">{updatetoggle && "Update"}</i>
             <i onClick={handleDelete} class="fa fa-remove"></i></div></>
           }
           </div>
           </div>
+
            </> );
 }

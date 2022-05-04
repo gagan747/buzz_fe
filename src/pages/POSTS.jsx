@@ -7,7 +7,7 @@ export default function POSTS() {
   return (
     <>
       {object.feeds.map((e) => (
-        <Post post={e} />
+        <Post key={e._id} post={e} />
       ))}{" "}
     </>
   );
