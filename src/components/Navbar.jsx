@@ -1,24 +1,24 @@
-import React, { useEffect, useState, useContext ,} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "../components/navbar.css";
-import { Link, useNavigate ,useLocation} from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBell,
   faEnvelope,
   faMagnifyingGlass,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { userContext } from "../pages/Home";
-import viewProfile from "./viewProfile/ViewProfile";
-
 function Navbar() {
   let location = useLocation();
-  
+
   const currentuser = useContext(userContext);
   const [name, setName] = useState("");
   const [profileImg, setProfileImg] = useState(null);
   const [isModerator, setIsModerator] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
+  const [friendRequestCount, setFriendRequestCount] = useState(0);
   const navigate = useNavigate();
 
   const islogged = async () => {
@@ -34,10 +34,11 @@ function Navbar() {
       setName(data.fName + " " + data.lName);
       setIsModerator(data.is_Admin);
       setProfileImg(data.profileImg);
-      if(location.pathname==='/home')
-      currentuser.update(data.profile_img, data.is_Admin, data.user_id);
+      setFriendRequestCount(data.friendRequestCount)
+      if (location.pathname === "/home")
+        currentuser.update(data.profile_img, data.is_Admin, data.user_id);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error("Something went wrong");
     }
   };
@@ -82,50 +83,55 @@ function Navbar() {
   return (
     <>
       <nav className="sticky-top navbar navbar-expand-xl navbar-light bg-light ">
-      <Link to={"/home"} className="navbar-brand">BUZZ</Link>
+        <Link to={"/home"} className="navbar-brand">
+          BUZZ
+        </Link>
         <span className="navbar-brand">{isModerator ? "MODERATOR" : ""}</span>
         <form className="navbar-form form-inline">
-         <div className="suggestion-controller"> <div className="input-group search-box">
-            <input
-              type="text"
-              id="search"
-              className="form-control"
-              placeholder="Search"
-              onChange={handleSearch}
-            ></input>
-            <span className="input-group-addon">
-              <FontAwesomeIcon icon={faMagnifyingGlass}></FontAwesomeIcon>
-            </span>
+          <div className="suggestion-controller">
+            {" "}
+            <div className="input-group search-box">
+              <input
+                type="text"
+                id="search"
+                className="form-control"
+                placeholder="Search"
+                onChange={handleSearch}
+              ></input>
+              <span className="input-group-addon">
+                <FontAwesomeIcon icon={faMagnifyingGlass}></FontAwesomeIcon>
+              </span>
+            </div>
+            <div className="suggestions">
+              {suggestions.map((e) => {
+                return (
+                  <div>
+                    <img
+                      className="image"
+                      src={e.profile_img}
+                      width="34px"
+                      height="34px"
+                    />
+                    {"  "}
+                    <span className="fullname">
+                      {e.firstname + " " + e.lastname}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <div className="suggestions">
-            {suggestions.map((e) => {
-              return (
-                <div>
-                  <img
-                    className="image"
-                    src={e.profile_img}
-                    width="34px"
-                    height="34px"
-                  />
-                  {"  "}
-                  <span className="fullname">{e.firstname + " " + e.lastname}</span>
-                </div> 
-              );
-            })}
-          </div></div>
         </form>
         <div className="navbar-nav ml-auto ">
-        <Link to={"/viewProfile"}>
-            viewProfile
-          </Link>
+          <Link to={"/viewProfile"}>viewProfile</Link>
           <a className="nav-item nav-link notifications">
             <FontAwesomeIcon icon={faBell}></FontAwesomeIcon>
             <span className="badge">1</span>
           </a>
-          <a className="nav-item nav-link messages">
-            <FontAwesomeIcon icon={faEnvelope}></FontAwesomeIcon>
-            <span className="badge">10</span>
-          </a>{" "}
+          <Link className="nav-item nav-link messages" to={"/getFriendRequest"}>
+            <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
+            <span className="badge">{friendRequestCount}</span>
+          </Link>{" "}
           <Link to={"/userProfile"}>
             <img className="addFeedImg" src={profileImg} alt="profileImg" />
             <span className="user fullname">{name}</span>
