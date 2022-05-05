@@ -50,7 +50,7 @@ function Feed() {
       setPageCount(postsdata.pageCount);
       setFeedCount(postsdata.feedCount);
     } catch (err) {
-      toast.error("Error loading posts");
+      console.log("Error loading posts");
     }
   };
   const getFeeds = (pageNumber) => {

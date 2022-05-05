@@ -39,10 +39,9 @@ function AddFeed() {
         toast.error(error);
         setLoader(false)
       }
-    } else {
+      }else {
       toast.error("text must have 5 characters");
-    }
-  };
+      }};
   const imageUploader = (x) => {
     setSelectedFile(x);
   };

@@ -1,7 +1,7 @@
 import Navbar from '../components/Navbar'
 import Feed from '../components/Feed'
 import {createContext,useState} from "react";
-import Suggestions from "../components/Suggestions.jsx"
+import FriendsContext from '../components/FriendsContext';
 const userContext=createContext();
 export {userContext};
 
@@ -13,8 +13,8 @@ export {userContext};
   return (
       <>
       <userContext.Provider value={{user,update}}>
-       <Navbar/>
-       <Suggestions />
+      <Navbar/>
+       <FriendsContext />
        <Feed/>
        </userContext.Provider>
       </>
