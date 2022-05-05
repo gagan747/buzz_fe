@@ -19,4 +19,41 @@ code {
   outline: none;
 }
 
+.friends-container{
+  position:fixed;
+  right:100px;
+  bottom:450px;
+  height:350px;
+  overflow:auto;
+  width:400px;
+  background-color:white;
+}
+.friends-container::-webkit-scrollbar {
+  display: none;
+ }
+.image {
+  border-radius: 20px;
+}
+.users-container{
+ margin:14px;
+ display:flex;
+ justify-content: space-between;
+}
+.friends-search{
+    width:400px;
+    display:flex;
+   justify-content: center;
+    height:50px;
+   background-color: white;
+   margin-bottom:-12px;
+   
+}
+.friends-search input{
+   border:none;
+   width:80%; 
+   margin-right:5px;
+ }
+ .friends-search i{
+   padding-top: 14px;
+ }
 
