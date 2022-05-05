@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../userProfile/UserProfile.css";
 import { toast } from "react-toastify";
-
+import Navbar from "../Navbar";
 function UserProfile() {
   const [email, setEmail] = useState();
   const [data, setData] = useState([]);
@@ -17,7 +17,7 @@ function UserProfile() {
   const [selectedCity, setSelectedCity] = useState();
   const [bio, setBio] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
-  const [loader,setLoader]=useState(false);
+  const [loader, setLoader] = useState(false);
   const [profileImg, setProfileImg] = useState(
     "https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8="
   );
@@ -146,8 +146,8 @@ function UserProfile() {
       } else {
         toast.error(data.message);
         setLoader(false);
-    }
-   } catch (error) {
+      }
+    } catch (error) {
       toast.error("Something wemt wrong");
       setLoader(false);
     }
@@ -186,6 +186,7 @@ function UserProfile() {
 
   return (
     <>
+      <Navbar />
       <form onSubmit={handleSubmit}>
         <div className="container-xl px-4 mt-4">
           <div className="row">
@@ -264,7 +265,6 @@ function UserProfile() {
                       />
                     </div>
                   </div>
-
                   <div className="row gx-3 mb-3">
                     <div className="col-md-6">
                       <label className="small mb-1" htmlFor="desgName">
@@ -298,7 +298,6 @@ function UserProfile() {
                       />
                     </div>
                   </div>
-
                   <div className="row gx-3 mb-3">
                     <div className="col-md-6">
                       <label className="small mb-1" htmlFor="gender">
@@ -401,8 +400,15 @@ function UserProfile() {
                       onChange={handleChange}
                       required
                     />
-                  </div> {loader && <i className="fa fa-spinner fa-spin fa-lg me-sm-3 me-l-3 me-xl-0 fa-fw"></i>}
-                  <button className="btn btn-primary" type="submit" disabled={loader}>
+                  </div>{" "}
+                  {loader && (
+                    <i className="fa fa-spinner fa-spin fa-lg me-sm-3 me-l-3 me-xl-0 fa-fw"></i>
+                  )}
+                  <button
+                    className="btn btn-primary"
+                    type="submit"
+                    disabled={loader}
+                  >
                     Save changes
                   </button>
                 </div>
