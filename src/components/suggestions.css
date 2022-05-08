@@ -1,10 +1,10 @@
 .users-suggestions{
     position:fixed;
-    right:100px;
-    bottom:50px;
-    height:350px;
+    right:5vw;
+    bottom:4vh;
+    height:40vh;
     overflow:auto;
-    width:400px;
+    width:21vw;
     background-color:white;
 }
 .users-suggestions::-webkit-scrollbar {

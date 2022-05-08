@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from "react";
-import "../userProfile/UserProfile.css";
-import { toast } from "react-toastify";
-import Navbar from "../Navbar";
+/* eslint-disable no-console */
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-shadow */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React, { useEffect, useState } from 'react';
+import './UserProfile.css';
+import { toast } from 'react-toastify';
+import Navbar from '../Navbar';
+import { userProfileUpdate, getUserProfileUrl } from '../../config';
+
 function UserProfile() {
   const [email, setEmail] = useState();
   const [data, setData] = useState([]);
@@ -19,25 +25,25 @@ function UserProfile() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [loader, setLoader] = useState(false);
   const [profileImg, setProfileImg] = useState(
-    "https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8="
+    'https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8=',
   );
 
   const getJsonData = async () => {
     try {
       const response = await fetch(
-        "https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json",
+        'https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json',
         {
-          method: "GET",
-        }
+          method: 'GET',
+        },
       );
       if (response.status === 200) {
         const jsondata = await response.json();
         setData(jsondata);
       } else {
-        toast.error("Failed,Try Again");
+        toast.error('Failed,Try Again');
       }
     } catch (error) {
-      toast.error("Failed,Try Again");
+      toast.error('Failed,Try Again');
     }
   };
   const country = [...new Set(data.map((item) => item.country))];
@@ -60,18 +66,7 @@ function UserProfile() {
     cities.sort();
     setCities(cities);
   };
-  const handleDynamicState = (val) => {
-    let states = data.filter((state) => state.country === val);
-    states = [...new Set(states.map((item) => item.subcountry))];
-    states.sort();
-    setState(states);
-  };
-  const handleDynamicCity = (val) => {
-    let cities = data.filter((city) => city.subcountry === val);
-    cities = [...new Set(cities.map((item) => item.name))];
-    cities.sort();
-    setCities(cities);
-  };
+
   const imageUploader = (x) => {
     const reader = new FileReader();
     reader.onload = () => {
@@ -83,17 +78,17 @@ function UserProfile() {
     setSelectedFile(x);
   };
   const handleChange = (e) => {
-    let { name, value } = e.target;
+    const { name, value } = e.target;
 
-    if (name === "firstName") setFirstName(value);
-    if (name === "lastName") setlastName(value);
-    if (name === "designation") setDesignation(value);
-    if (name === "dob") setDob(value);
-    if (name === "gender") setGender(value);
-    if (name === "bio") setBio(value);
-    if (name === "country") setCountry(value);
-    if (name === "state") setSelectedState(value);
-    if (name === "city") setSelectedCity(value);
+    if (name === 'firstName') setFirstName(value);
+    if (name === 'lastName') setlastName(value);
+    if (name === 'designation') setDesignation(value);
+    if (name === 'dob') setDob(value);
+    if (name === 'gender') setGender(value);
+    if (name === 'bio') setBio(value);
+    if (name === 'country') setCountry(value);
+    if (name === 'state') setSelectedState(value);
+    if (name === 'city') setSelectedCity(value);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -101,41 +96,39 @@ function UserProfile() {
     const formdata = new FormData();
 
     if (getCountry === undefined) {
-      toast.error("Set Country");
+      toast.error('Set Country');
       return;
-    } else {
-      formdata.append("country", getCountry);
     }
+    formdata.append('country', getCountry);
+
     if (selectedCity === undefined) {
-      toast.error("Set City");
+      toast.error('Set City');
       return;
-    } else {
-      formdata.append("city", selectedCity);
     }
+    formdata.append('city', selectedCity);
+
     if (getCountry === undefined) {
-      toast.error("Set Country");
+      toast.error('Set Country');
       return;
-    } else {
-      formdata.append("state", selectedState);
     }
+    formdata.append('state', selectedState);
 
-    formdata.append("firstname", firstName);
-    formdata.append("lastname", lastName);
-    formdata.append("gender", gender);
-    formdata.append("dob", dob);
-    formdata.append("bio", bio);
-    formdata.append("designation", designation);
+    formdata.append('firstname', firstName);
+    formdata.append('lastname', lastName);
+    formdata.append('gender', gender);
+    formdata.append('dob', dob);
+    formdata.append('bio', bio);
+    formdata.append('designation', designation);
 
-    if (selectedFile)
-      formdata.append("profileImg", selectedFile, selectedFile.name);
+    if (selectedFile) formdata.append('profileImg', selectedFile, selectedFile.name);
     try {
       setLoader(true);
       const response = await fetch(
-        "http://localhost:3000/api/userprofile/update",
+        userProfileUpdate,
         {
-          method: "PUT",
+          method: 'PUT',
           body: formdata,
-        }
+        },
       );
 
       const data = await response.json();
@@ -148,23 +141,23 @@ function UserProfile() {
         setLoader(false);
       }
     } catch (error) {
-      toast.error("Something wemt wrong");
+      toast.error('Something wemt wrong');
       setLoader(false);
     }
   };
 
   const getUserProfile = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/userprofile", {
-        method: "GET",
+      const response = await fetch(getUserProfileUrl, {
+        method: 'GET',
       });
       const userData = await response.json();
       console.log(userData);
-      let dob = userData.dob.split("-");
-      let date = dob[2].substring(0, 2);
-      let month = dob[1];
-      let year = dob[0];
-      let formattedDate = "" + year + "-" + month + "-" + date;
+      const dob = userData.dob.split('-');
+      const date = dob[2].substring(0, 2);
+      const month = dob[1];
+      const year = dob[0];
+      const formattedDate = `${year}-${month}-${date}`;
 
       setEmail(userData.email);
       setFirstName(userData.firstname);
@@ -180,7 +173,7 @@ function UserProfile() {
       // handleDynamicState(userData.country);
       // handleDynamicCity(userData.state);
     } catch (err) {
-      toast.error("Something went wrong");
+      toast.error('Something went wrong');
     }
   };
 
@@ -400,9 +393,10 @@ function UserProfile() {
                       onChange={handleChange}
                       required
                     />
-                  </div>{" "}
+                  </div>
+                  {' '}
                   {loader && (
-                    <i className="fa fa-spinner fa-spin fa-lg me-sm-3 me-l-3 me-xl-0 fa-fw"></i>
+                    <i className="fa fa-spinner fa-spin fa-lg me-sm-3 me-l-3 me-xl-0 fa-fw" />
                   )}
                   <button
                     className="btn btn-primary"
