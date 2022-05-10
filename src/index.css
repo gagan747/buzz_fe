@@ -21,11 +21,11 @@ code {
 
 .friends-container{
   position:fixed;
-  right:100px;
-  bottom:450px;
-  height:350px;
+  right:5vw;
+  bottom:49vh;
+  height:40vh;
   overflow:auto;
-  width:400px;
+  width:21vw;
   background-color:white;
 }
 .friends-container::-webkit-scrollbar {
