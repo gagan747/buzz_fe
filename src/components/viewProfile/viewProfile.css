@@ -11,3 +11,13 @@
     background-size: cover;
     background-repeat: no-repeat
 }
+.primary-btn{
+    background-color: #0d6efd;
+    border-radius: 10%;
+    color: white;
+    padding: 7px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}

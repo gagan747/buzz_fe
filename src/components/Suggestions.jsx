@@ -12,6 +12,7 @@ import React, {
 } from 'react';
 import { toast } from 'react-toastify';
 import './suggestions.css';
+import { Link } from 'react-router-dom';
 import { friendContext } from './FriendsContext';
 import { userContext } from '../pages/Home';
 import {
@@ -159,7 +160,9 @@ function Suggestions() {
             />
             {' '}
             {'  '}
-            <span className="fullname">{`${suggestion.firstname} ${suggestion.lastname}`}</span>
+            <Link to="/viewProfile" state={{ id: suggestion._id }}>
+              <span className="fullname">{`${suggestion.firstname} ${suggestion.lastname}`}</span>
+            </Link>
           </span>
           <span>
             {handleButtons(suggestion)}

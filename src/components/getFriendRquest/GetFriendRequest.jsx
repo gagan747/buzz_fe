@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserFriends } from '@fortawesome/free-solid-svg-icons';
 import './GetFriendRequest.css';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 import Navbar from '../Navbar';
 import { getFriendRequests, acceptFriendRequest, cancelFriendRequest } from '../../config';
 
@@ -97,9 +98,11 @@ function GetFriendRequest() {
                           alt="..."
                         />
                         <div className="px-1">
-                          <h5 className="my-1 text-info">
-                            {`${friendData.firstname} ${friendData.lastname}`}
-                          </h5>
+                          <Link to="/viewProfile" state={{ id: friendData._id }}>
+                            <h5 className="my-1 text-info">
+                              {`${friendData.firstname} ${friendData.lastname}`}
+                            </h5>
+                          </Link>
                         </div>
                       </div>
                       <div className="d-flex align-items-center">

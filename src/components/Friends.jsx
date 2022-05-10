@@ -11,6 +11,7 @@
 import {
   useState, useContext, useEffect, useRef,
 } from 'react';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { friendContext } from './FriendsContext';
 import { unfriend, getFriends } from '../config';
@@ -95,7 +96,9 @@ export default function Friends() {
             />
             {' '}
             {'  '}
-            <span className="fullname">{`${friend.firstname} ${friend.lastname}`}</span>
+            <Link to="/viewProfile" state={{ id: friend._id }}>
+              <span className="fullname">{`${friend.firstname} ${friend.lastname}`}</span>
+            </Link>
           </span>
           <span>
             <button onClick={() => unFriend(friend._id)} type="button" className="btn btn-sm btn-primary">Unfriend</button>

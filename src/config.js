@@ -22,4 +22,6 @@ export const unfriend = `${apiUrl}/friends/unFriend`;
 export const getFriends = `${apiUrl}/friends/getFriends`;
 export const getFriendRequests = `${apiUrl}/friends/getFriendRequests`;
 export const userProfileUpdate = `${apiUrl}/userprofile/update`;
+export const viewProfileUrl = `${apiUrl}/viewprofile`;
+export const getFriendFeedsUrl = `${apiUrl}/friendFeeds`;
 
