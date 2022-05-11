@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
 /* eslint-disable import/no-cycle */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -92,6 +93,8 @@ function Navbar() {
       </Link>
       <span className="navbar-brand">{isModerator ? 'MODERATOR' : ''}</span>
       <form className="navbar-form form-inline">
+        {(location.pathname === '/home')
+        && (
         <div className="suggestion-controller">
           {' '}
           <div className="input-group search-box">
@@ -116,16 +119,18 @@ function Navbar() {
                   height="34px"
                 />
                 {'  '}
-                <span className="fullname">
-                  {`${e.firstname} ${e.lastname}`}
-                </span>
+                <Link to="/viewProfile" state={{ id: e._id }}>
+                  <span className="fullname">
+                    {`${e.firstname} ${e.lastname}`}
+                  </span>
+                </Link>
               </div>
             ))}
           </div>
         </div>
+        )}
       </form>
       <div className="navbar-nav ml-auto ">
-        <Link to="/viewProfile">viewProfile</Link>
         <a className="nav-item nav-link notifications">
           <FontAwesomeIcon icon={faBell} />
           <span className="badge">1</span>
