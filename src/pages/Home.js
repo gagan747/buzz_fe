@@ -12,7 +12,7 @@ const userContext = createContext();
 export { userContext };
 
 function Home() {
-  const [user, setUser] = useState({ profile_img: '', is_Admin: false, user_id: '' });
+  const [user, setUser] = useState({ profile_img: '', is_Admin: 'notLoaded', user_id: '' });
   const update = (profile_img, is_Admin, user_id) => {
     setUser({ profile_img, is_Admin, user_id });
   };
