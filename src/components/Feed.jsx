@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-plusplus */
@@ -23,6 +24,7 @@ const feedContext = createContext();
 export { feedContext };
 const pageLimit = 10;
 function Feed({ children }) {
+  console.log('from feeds');
   const [pageNumber, setPageNumber] = useState(1);
   let [feeds, setFeeds] = useState([]);
   const currentuser = useContext(userContext);

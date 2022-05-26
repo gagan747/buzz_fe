@@ -1,4 +1,4 @@
-export const apiUrl = 'http://localhost:3000/api';
+export const apiUrl = 'http://localhost:5000/api';
 export const homeUrl = `${apiUrl}/home`;
 export const logoutUrl = `${apiUrl}/logout`;
 export const commentUrl = `${apiUrl}/comments/`;
