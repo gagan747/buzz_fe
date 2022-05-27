@@ -1,4 +1,4 @@
-export const apiUrl = 'http://localhost:5000/api';
+export const apiUrl = process.env.REACT_APP_STAGE === 'production' ? 'https://chat-with-buzz.herokuapp.com/api' : 'http://localhost:5000/api';
 export const homeUrl = `${apiUrl}/home`;
 export const logoutUrl = `${apiUrl}/logout`;
 export const commentUrl = `${apiUrl}/comments/`;
@@ -24,4 +24,3 @@ export const getFriendRequests = `${apiUrl}/friends/getFriendRequests`;
 export const userProfileUpdate = `${apiUrl}/userprofile/update`;
 export const viewProfileUrl = `${apiUrl}/viewprofile`;
 export const getFriendFeedsUrl = `${apiUrl}/friendFeeds`;
-

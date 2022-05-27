@@ -24,6 +24,7 @@ import { homeUrl, logoutUrl, searchSuggestionUrl } from '../config';
 const token = localStorage.getItem('x-auth-token');
 
 function Navbar() {
+  console.log(process.env.REACT_APP_STAGE);
   const location = useLocation();
   const currentuser = useContext(userContext);
   const [name, setName] = useState('');
