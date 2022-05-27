@@ -1,3 +1,6 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable array-callback-return */
@@ -15,6 +18,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { friendContext } from './FriendsContext';
 import { unfriend, getFriends } from '../config';
+import { unregister } from '../interceptor';
 
 export default function Friends() {
   const FriendContext = useContext(friendContext);

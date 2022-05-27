@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable import/order */
 /* eslint-disable import/extensions */
@@ -24,6 +26,7 @@ function App() {
         <Route path="/forgotpassword" element={<Forgotpassword />} />
         <Route path="/*" element={<NotFound />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/home/:jwtoken" element={<Home />} />
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path="/viewProfile" element={<ViewProfile />} />
         <Route path="/getFriendRequest" element={<GetFriendRequest />} />

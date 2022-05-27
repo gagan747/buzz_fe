@@ -44,7 +44,7 @@ export default function Signup() {
     const year = dob[0];
     const presentdate = new Date();
     let age = presentdate.getFullYear() - year;
-    if (presentdate.getMonth() - month < 0) { age--; } else if (+presentdate.getMonth() - month === 0 && +presentdate.getDate() - date < 0) { age--; }
+    if (+presentdate.getMonth() + 1 - month < 0) { age--; } else if (+presentdate.getMonth() + 1 - month === 0 && +presentdate.getDate() - date < 0) { age--; }
     if (age < 14) {
       handleError('dob');
       return false;
@@ -63,6 +63,7 @@ export default function Signup() {
       const data = await response.json();
       if (response.status === 201) {
         toast.success(data.message);
+        localStorage.setItem('x-auth-token', response.headers.get('x-auth-token'));
         navigate('/home');
       } else { toast.error(`${data.message}`); }
     } catch (err) {
