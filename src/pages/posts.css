@@ -22,6 +22,9 @@
   overflow-y: auto;
   word-break: break-all;
 }
+.posttext::-webkit-scrollbar {
+  display: none;
+ }
 .like-comment-container {
   display: flex;
   justify-content: space-between;

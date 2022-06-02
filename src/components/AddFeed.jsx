@@ -35,7 +35,7 @@ function AddFeed() {
         const data = await response.json();
         if (response.status === 201) {
           toast.success(data.message);
-          obj.addfeed();
+          obj.addfeed(data.feed);
         } else toast.error(data.message);
         setLoader(false);
       } catch (error) {
