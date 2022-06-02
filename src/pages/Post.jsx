@@ -7,9 +7,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable react/prop-types */
-import React, {
-  useState, createContext, useContext,
-} from 'react';
+import React, { useState, createContext, useContext } from 'react';
 import { toast } from 'react-toastify';
 import './posts.css';
 import { useNavigate } from 'react-router-dom';
@@ -33,10 +31,9 @@ export default function Post({ post }) {
   };
   const handlePostToggle = async () => {
     try {
-      const response = await fetch(
-        `${ModeratorUrl}poststatus/${post._id}`,
-        { method: 'POST' },
-      );
+      const response = await fetch(`${ModeratorUrl}poststatus/${post._id}`, {
+        method: 'POST',
+      });
       const result = await response.json();
       if (response.status === 200) {
         feeds.updatefeed(result.data);
@@ -44,7 +41,9 @@ export default function Post({ post }) {
       } else if (response.status === 307) {
         navigate('/');
         toast.error('User Not logged In');
-      } else { console.log(result.message); }
+      } else {
+        console.log(result.message);
+      }
     } catch (err) {
       toast.error('Something went wrong');
     }
@@ -54,7 +53,9 @@ export default function Post({ post }) {
   };
   const deletePost = async () => {
     try {
-      const response = await fetch(`${feedUrl}${post._id}`, { method: 'DELETE' });
+      const response = await fetch(`${feedUrl}${post._id}`, {
+        method: 'DELETE',
+      });
       const result = await response.json();
       if (response.status === 200) {
         toast.success(result.message);
@@ -62,10 +63,11 @@ export default function Post({ post }) {
       } else if (response.status === 307) {
         navigate('/');
         toast.error('User Not logged In');
-      } else { toast.error(result.message); }
+      } else {
+        toast.error(result.message);
+      }
     } catch (err) {
       toast.error('Something went wrong');
-      console.log(err);
     }
   };
   const handleComment = async () => {
@@ -78,16 +80,19 @@ export default function Post({ post }) {
         else if (result.status === 307) {
           navigate('/');
           toast.error('User Not logged In');
-        } else { toast.error(result.message); }
+        } else {
+          toast.error(result.message);
+        }
       }
-    } catch (err) { toast.error('Something went wrong'); }
+    } catch (err) {
+      toast.error('Something went wrong');
+    }
   };
   const handleFlag = async () => {
     try {
-      const response = await fetch(
-        `${feedUrl}flag/${post._id}`,
-        { method: 'PUT' },
-      );
+      const response = await fetch(`${feedUrl}flag/${post._id}`, {
+        method: 'PUT',
+      });
       const result = await response.json();
       if (response.status === 200) {
         feeds.updatefeed(result);
@@ -98,15 +103,13 @@ export default function Post({ post }) {
       } else toast.error(result.message);
     } catch (err) {
       toast.error('Something went wrong');
-      console.log(err);
     }
   };
   const handleModerator = async () => {
     try {
-      const response = await fetch(
-        `${ModeratorUrl}deletepost/${post._id}`,
-        { method: 'DELETE' },
-      );
+      const response = await fetch(`${ModeratorUrl}deletepost/${post._id}`, {
+        method: 'DELETE',
+      });
       const result = await response.json();
       if (response.status === 200) {
         toast.success(result.message);
@@ -114,18 +117,18 @@ export default function Post({ post }) {
       } else if (response.status === 307) {
         navigate('/');
         toast.error('User Not logged In');
-      } else { toast.error(result.message); }
+      } else {
+        toast.error(result.message);
+      }
     } catch (err) {
       toast.error('Something went wrong');
-      console.log(err);
     }
   };
   const handlelike = async () => {
     try {
-      const response = await fetch(
-        `${feedUrl}like/${post._id}`,
-        { method: 'PUT' },
-      );
+      const response = await fetch(`${feedUrl}like/${post._id}`, {
+        method: 'PUT',
+      });
       const result = await response.json();
       if (response.status === 200) {
         feeds.updatefeed(result);
@@ -136,10 +139,8 @@ export default function Post({ post }) {
       } else toast.error(result.message);
     } catch (err) {
       toast.error('Something went wrong');
-      console.log(err);
     }
   };
-
   return (
     <commentContext.Provider
       value={{
@@ -149,7 +150,12 @@ export default function Post({ post }) {
         deleteComment,
       }}
     >
-      <div className={post.status === 'active' && 'postcontainer' || 'postcontainer opacity-50 pe-none'}>
+      <div
+        className={
+          (post.status === 'active' && 'postcontainer')
+          || 'postcontainer opacity-50 pe-none'
+        }
+      >
         <div className="postcreator">
           <span>
             {' '}
@@ -165,24 +171,37 @@ export default function Post({ post }) {
             </span>
           </span>
           {(currentuser.user.is_Admin && (
-          <span className="moderator-options">
-            <span>
-              {' '}
-              {post.status === 'active' && (<i onClick={handlePostToggle} className="fa fa-solid fa-toggle-on text-success pe-auto  " aria-hidden="true" />) || (<i onClick={handlePostToggle} className="fa fa-solid fa-toggle-off pe-auto " aria-hidden="true" />)}
-              <i
-                onClick={handleModerator}
-                className="fa fa-times"
-                aria-hidden="true"
-              />
+            <span className="moderator-options">
+              <span>
+                {' '}
+                {(post.status === 'active' && (
+                  <i
+                    onClick={handlePostToggle}
+                    className="fa fa-solid fa-toggle-on text-success pe-auto  "
+                    aria-hidden="true"
+                  />
+                )) || (
+                  <i
+                    onClick={handlePostToggle}
+                    className="fa fa-solid fa-toggle-off pe-auto "
+                    aria-hidden="true"
+                  />
+                )}
+                <i
+                  onClick={handleModerator}
+                  className="fa fa-times"
+                  aria-hidden="true"
+                />
+              </span>
+              {(post.flagCount.length && (
+                <i className="fa fa-flag text-danger pl-2" aria-hidden="true">
+                  {' '}
+                  :
+                  {post?.flagCount?.length}
+                </i>
+              ))
+                || ''}
             </span>
-            {post.flagCount.length && (
-            <i className="fa fa-flag text-danger pl-2" aria-hidden="true">
-              {' '}
-              :
-              {post?.flagCount?.length}
-            </i>
-            ) || ''}
-          </span>
           )) || (
             <span className="options-dropdown">
               <span
@@ -193,29 +212,29 @@ export default function Post({ post }) {
                 ...
               </span>
               {optionstoggle && (
-              <span>
-                {(currentuser.user.user_id === post.createdBy._id && (
-                <button
-                  onClick={deletePost}
-                  type="button"
-                  className="btn btn-secondary btn-sm optionsbutton"
-                >
-                  Delete
-                </button>
-                )) || (
-                <button
-                  onClick={handleFlag}
-                  type="button"
-                  className=" px-2 btn btn-danger btn-sm optionsbutton"
-                >
-                  {(post.flagCount.indexOf(currentuser.user.user_id)
-                              !== -1
-                              && 'Unflag')
-                              || 'Mark as Flag'}
-                </button>
-                )}
-                {' '}
-              </span>
+                <span>
+                  {(currentuser.user.user_id === post.createdBy._id && (
+                    <button
+                      onClick={deletePost}
+                      type="button"
+                      className="btn btn-secondary btn-sm optionsbutton"
+                    >
+                      Delete
+                    </button>
+                  )) || (
+                    <button
+                      onClick={handleFlag}
+                      type="button"
+                      className=" px-2 btn btn-danger btn-sm optionsbutton"
+                    >
+                      {(post.flagCount.indexOf(currentuser.user.user_id)
+                        !== -1
+                        && 'Unflag')
+                        || 'Mark as Flag'}
+                    </button>
+                  )}
+                  {' '}
+                </span>
               )}
             </span>
           )}
@@ -225,26 +244,28 @@ export default function Post({ post }) {
           {' '}
         </div>
         {post.imgLink && (
-        <img
-          className="postimage"
-          src={post.imgLink}
-          width="590px"
-          height="400px"
-          alt=""
-        />
+          <img
+            className="postimage"
+            src={post.imgLink}
+            width="590px"
+            height="400px"
+            alt=""
+          />
         )}
         <div className="like-comment-container">
           <div
             className={
-                (post.likeCount.indexOf(currentuser.user.user_id) !== -1
-                  && 'liked')
-                || ''
-              }
+              (post.likeCount.indexOf(currentuser.user.user_id) !== -1
+                && 'liked')
+              || ''
+            }
             onClick={handlelike}
           >
             {(post.likeCount.indexOf(currentuser.user.user_id) !== -1
-                && `${(post.likeCount.length && post.likeCount.length || '')} Like`)
-                || `${(post.likeCount.length && post.likeCount.length || '')} Like`}
+              && `${
+                (post.likeCount.length && post.likeCount.length) || ''
+              } Like`)
+              || `${(post.likeCount.length && post.likeCount.length) || ''} Like`}
             <i className="fa fa-thumbs-up m-2" aria-hidden="true" />
           </div>
           <div onClick={handleComment}>

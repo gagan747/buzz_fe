@@ -1,4 +1,3 @@
-
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-underscore-dangle */
@@ -14,7 +13,7 @@ export default function POSTS() {
       dataLength={FeedContext.feeds.length}
       next={FeedContext.getFeeds}
       hasMore={FeedContext.noMore}
-      loader={<h4>Loading...</h4>}
+      loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}
       endMessage={(
         <p style={{ textAlign: 'center' }}>
           <b>Yay! You have seen it all</b>

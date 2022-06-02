@@ -1,3 +1,6 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable array-callback-return */
@@ -38,7 +41,6 @@ export default function Friends() {
         FriendContext.forceRender();
       }
     } catch (err) {
-      console.log(err);
       toast.error('Something wemt wrong');
     }
   };

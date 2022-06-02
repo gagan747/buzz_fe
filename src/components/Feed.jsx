@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-plusplus */
@@ -50,7 +51,6 @@ function Feed({ children }) {
     try {
       const response = await fetch(`${apiUrl}/${currentuser.user.is_Admin && ('moderator/getFeeds') || ('feed')}/?pageNumber=${pageNumber}&pageLimit=${pageLimit}`);
       const postsdata = await response.json();
-
       if (response.status === 200) {
         if (postsdata.feeds.length === 0 || postsdata.feeds.length < pageLimit) { setNoMore(false); }
         setFeeds([...feeds, ...postsdata.feeds]);
@@ -82,5 +82,4 @@ function Feed({ children }) {
     </feedContext.Provider>
   );
 }
-
 export default Feed;

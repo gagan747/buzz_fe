@@ -19,7 +19,9 @@ export default function AddComment() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      if (e.target.childNodes[1].value.length < 5) { return toast.error('Comments should be greater than 5 characters'); }
+      if (e.target.childNodes[1].value.length < 5) {
+        return toast.error('Comments should be greater than 5 characters');
+      }
       const result = await fetch(`${commentUrl}${commentcontext.feed_Id}`, {
         method: 'POST',
         headers: {
@@ -46,9 +48,29 @@ export default function AddComment() {
   return (
     <div>
       <form className="form" onSubmit={handleSubmit}>
-        <img src={currentuser.user.profile_img} className="image" width="40px" height="40px" />
-        <input type="text" value={comment} placeholder="Add a comment" onChange={(e) => { setComment(e.target.value); }} className="addcomment" required />
-        <button className=" btn btn-sm btn-primary rounded-pill" type="submit" style={{ width: '70px', fontWeight: 'bold' }}>Post</button>
+        <img
+          src={currentuser.user.profile_img}
+          className="image"
+          width="40px"
+          height="40px"
+        />
+        <input
+          type="text"
+          value={comment}
+          placeholder="Add a comment"
+          onChange={(e) => {
+            setComment(e.target.value);
+          }}
+          className="addcomment"
+          required
+        />
+        <button
+          className=" btn btn-sm btn-primary rounded-pill"
+          type="submit"
+          style={{ width: '70px', fontWeight: 'bold' }}
+        >
+          Post
+        </button>
       </form>
     </div>
   );
