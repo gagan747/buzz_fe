@@ -4,7 +4,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable import/no-cycle */
 import { createContext, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Feed from '../components/Feed';
 import FriendsContext from '../components/FriendsContext';
@@ -14,6 +14,7 @@ export { userContext };
 
 function Home() {
   const { jwtoken } = useParams();
+  const navigate = useNavigate();
   const [user, setUser] = useState({ profile_img: '', is_Admin: 'notLoaded', user_id: '' });
   const update = (profile_img, is_Admin, user_id) => {
     setUser({ profile_img, is_Admin, user_id });
@@ -21,6 +22,7 @@ function Home() {
   useEffect(() => {
     if (jwtoken) {
       localStorage.setItem('x-auth-token', jwtoken);
+      navigate('/home');
     }
   }, []);
   return (
