@@ -1,3 +1,7 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
 /* eslint-disable max-len */
 /* eslint-disable no-use-before-define */
 /* eslint-disable consistent-return */
@@ -7,14 +11,14 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable react/react-in-jsx-scope */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
 import './signup.css';
 import { registerApiUrl } from '../config';
 
 export default function Signup() {
-  const [state, setState] = useState({
+  const [usersData, setusersData] = useState({
     firstname: '',
     lastname: '',
     email: '',
@@ -25,20 +29,30 @@ export default function Signup() {
     gender: '',
     dob: '',
   });
+  const [Countries, setCountries] = useState([]);
+  const [countriesData, setCountriesData] = useState([]);
+  const [city, setCity] = useState([]);
+  const [state, setState] = useState([]);
   const navigate = useNavigate();
   const formdata = (e) => {
-    setState({ ...state, [e.target.name]: e.target.value });
+    setusersData({ ...usersData, [e.target.name]: e.target.value });
   };
   const [showpassword, setShowpassword] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (state.firstname.length < 3) { return handleError('firstname'); }
-    if (state.lastname.length < 3) { return handleError('lastname'); }
-    if (!state.password || !/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#%])/.test(state.password)) { return handleError('password'); }
+    if (usersData.firstname.length < 3) { return handleError('firstname'); }
+    if (usersData.lastname.length < 3) { return handleError('lastname'); }
+    if (!usersData.password || !/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#%])/.test(usersData.password)) { return handleError('password'); }
     if (validateDate()) { register(); }
   };
+  const loadCountriesdata = async () => {
+    const data = await fetch('https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json');
+    const countriesdata = await data.json();
+    setCountriesData(countriesdata);
+    setCountries([...new Set(countriesdata.map((countrydata) => countrydata.country))].sort());
+  };
   const validateDate = () => {
-    const dob = state.dob.split('-');
+    const dob = usersData.dob.split('-');
     const date = dob[2];
     const month = dob[1];
     const year = dob[0];
@@ -58,7 +72,7 @@ export default function Signup() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(state),
+        body: JSON.stringify(usersData),
       });
       const data = await response.json();
       if (response.status === 201) {
@@ -75,6 +89,21 @@ export default function Signup() {
     a.style.display = 'block';
     setTimeout(() => { a.style.display = 'none'; }, 2000);
   };
+  useEffect(() => { loadCountriesdata(); }, []);
+  useEffect(() => {
+    if (usersData.country === '') {
+      setusersData({ ...usersData, state: '' });
+      setusersData({ ...usersData, city: '' });
+      setState([]);
+      setCity([]);
+    } else {
+      setState([...new Set(countriesData.filter((countrydata) => countrydata.country === usersData.country).map((country) => country.subcountry))].sort());
+    }
+    if (usersData.state === '') {
+      setCity([]);
+      setusersData({ ...usersData, city: '' });
+    } else { setCity(countriesData.filter((countrydata) => countrydata.subcountry === usersData.state).map((country) => country.name).sort()); }
+  }, [usersData.country, usersData.state]);
   return (
     <div className="vh-100" style={{ backgroundColor: '#eee' }}>
       <div className="container h-100">
@@ -108,28 +137,42 @@ export default function Signup() {
                       </div>
                       <div className="d-flex flex-row align-items-center mb-2">
                         <i className="fa fa-lock fa-lg me-3 fa-fw" />
-                        <div className="form-outline flex-fill mb-0">
-                          <input name="password" type={showpassword ? 'text' : 'password'} id="form3Example4c" style={{ boxShadow: 'none' }} className=" form-control border-top-0 border-left-0 border-right-0" placeholder="password" onChange={(e) => { formdata(e); }} required />
+                        <div className="form-outline flex-fill mb-2 ">
+                          <input name="password" type={showpassword ? 'text' : 'password'} id="form3Example4c" style={{ boxShadow: 'none' }} className=" form-control border-top-0 border-left-0 border-right-0 " placeholder="password" onChange={(e) => { formdata(e); }} required />
                         </div>
                         <i onClick={() => { setShowpassword(!showpassword); }} className="d-inline fa fa-eye " />
                       </div>
                       <p id="password" style={{ display: 'none' }} className="text-center text-danger font-italic  mx-1 mx-md-5  "> Password must be min 8 and max 15 characters long , have atleast one uppercase letter,number and atleast have one special character</p>
                       <div className="d-flex flex-row align-items-center mb-2">
                         <i className="fa fa-flag fa-lg me-3 fa-fw" />
-                        <div className="form-outline flex-fill mb-0">
-                          <input name="country" type="text" id="form3Example1c" style={{ boxShadow: 'none' }} className="form-control border-top-0 border-left-0 border-right-0" placeholder="Country" onChange={(e) => { formdata(e); }} required />
-                        </div>
+                        <div className="form-outline flex-fill " />
+                        <select className="w-100 ml-2 options mb-2" name="country" onChange={(e) => { formdata(e); }}>
+                          <option selected>Select Country</option>
+                          {
+                            Countries.map((data) => <option value={data}>{data}</option>)
+                          }
+                        </select>
                       </div>
                       <div className="d-flex flex-row align-items-center mb-2">
                         <i className="fa fa-circle fa-lg me-3 fa-fw" />
-                        <div className="form-outline flex-fill mb-0">
-                          <input name="state" type="text" className="form-control border-top-0 border-left-0 border-right-0" placeholder="State" onChange={(e) => { formdata(e); }} required />
+                        <div className="form-outline flex-fill mb-2">
+                          <select className="w-100 ml-1 options" name="state" onChange={(e) => { formdata(e); }} required>
+                            <option selected>Select State</option>
+                            {
+                           state.map((statevalue) => <option value={statevalue}>{statevalue}</option>)
+                          }
+                          </select>
                         </div>
                       </div>
                       <div className="d-flex flex-row align-items-center mb-2">
                         <i className="fa fa-building fa-lg me-3 fa-fw" />
                         <div className="form-outline flex-fill mb-0">
-                          <input name="city" type="text" className="form-control border-top-0 border-left-0 border-right-0" placeholder="City" onChange={(e) => { formdata(e); }} required />
+                          <select className="w-100 ml-1 options" name="city" onChange={(e) => { formdata(e); }} required>
+                            <option selected>Select City</option>
+                            {
+                           (state.length !== 0) && city.map((cityvalue) => <option value={cityvalue}>{cityvalue}</option>)
+                          }
+                          </select>
                         </div>
                       </div>
                       <div className="d-flex flex-row align-items-center  mb-2 w-100  " style={{ marginLeft: '11px' }}>

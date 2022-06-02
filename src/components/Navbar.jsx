@@ -129,10 +129,7 @@ function Navbar() {
         )}
       </form>
       <div className="navbar-nav ml-auto ">
-        <a className="nav-item nav-link notifications">
-          <FontAwesomeIcon icon={faBell} />
-          <span className="badge">1</span>
-        </a>
+
         <Link className="nav-item nav-link messages" to="/getFriendRequest">
           <FontAwesomeIcon icon={faUser} />
           <span className="badge">{friendRequestCount}</span>
