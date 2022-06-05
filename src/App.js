@@ -16,6 +16,7 @@ import NotFound from './pages/notfound.jsx';
 import UserProfile from './components/userProfile/UserProfile';
 import ViewProfile from './components/viewProfile/ViewProfile';
 import GetFriendRequest from './components/getFriendRquest/GetFriendRequest';
+import { unregister } from './interceptor';
 
 function App() {
   return (

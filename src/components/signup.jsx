@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-expressions */
 /* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 /* eslint-disable max-len */
 /* eslint-disable no-use-before-define */
@@ -92,18 +90,25 @@ export default function Signup() {
   useEffect(() => { loadCountriesdata(); }, []);
   useEffect(() => {
     if (usersData.country === '') {
-      setusersData({ ...usersData, state: '' });
-      setusersData({ ...usersData, city: '' });
+      setusersData({ ...usersData, state: '', city: '' });
       setState([]);
       setCity([]);
     } else {
       setState([...new Set(countriesData.filter((countrydata) => countrydata.country === usersData.country).map((country) => country.subcountry))].sort());
+      setusersData({ ...usersData, state: '', city: '' });
+      setCity([]);
     }
+  }, [usersData.country]);
+  useEffect(() => {
     if (usersData.state === '') {
       setCity([]);
       setusersData({ ...usersData, city: '' });
-    } else { setCity(countriesData.filter((countrydata) => countrydata.subcountry === usersData.state).map((country) => country.name).sort()); }
-  }, [usersData.country, usersData.state]);
+    } else {
+      setCity(countriesData.filter((countrydata) => countrydata.subcountry === usersData.state).map((country) => country.name).sort());
+      setusersData({ ...usersData, city: '' });
+    }
+  }, [usersData.state]);
+
   return (
     <div className="vh-100" style={{ backgroundColor: '#eee' }}>
       <div className="container h-100">
@@ -147,9 +152,9 @@ export default function Signup() {
                         <i className="fa fa-flag fa-lg me-3 fa-fw" />
                         <div className="form-outline flex-fill " />
                         <select className="w-100 ml-2 options mb-2" name="country" onChange={(e) => { formdata(e); }}>
-                          <option selected>Select Country</option>
+                          <option value="">Select Country</option>
                           {
-                            Countries.map((data) => <option value={data}>{data}</option>)
+                            Countries.map((data) => <option value={data} key={data}>{data}</option>)
                           }
                         </select>
                       </div>
@@ -157,9 +162,9 @@ export default function Signup() {
                         <i className="fa fa-circle fa-lg me-3 fa-fw" />
                         <div className="form-outline flex-fill mb-2">
                           <select className="w-100 ml-1 options" name="state" onChange={(e) => { formdata(e); }} required>
-                            <option selected>Select State</option>
+                            <option value="">Select State</option>
                             {
-                           state.map((statevalue) => <option value={statevalue}>{statevalue}</option>)
+                         state.map((statevalue) => <option value={statevalue} key={statevalue}>{statevalue}</option>)
                           }
                           </select>
                         </div>
@@ -168,9 +173,9 @@ export default function Signup() {
                         <i className="fa fa-building fa-lg me-3 fa-fw" />
                         <div className="form-outline flex-fill mb-0">
                           <select className="w-100 ml-1 options" name="city" onChange={(e) => { formdata(e); }} required>
-                            <option selected>Select City</option>
+                            <option value="">Select City</option>
                             {
-                           (state.length !== 0) && city.map((cityvalue) => <option value={cityvalue}>{cityvalue}</option>)
+                           city.map((cityvalue) => <option value={cityvalue} key={cityvalue}>{cityvalue}</option>)
                           }
                           </select>
                         </div>
