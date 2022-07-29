@@ -12,14 +12,12 @@ import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Navbar from '../Navbar';
 import './viewProfile.css';
-import { userContext } from '../../pages/Home';
 import { viewProfileUrl } from '../../config';
 import { deleteFriendRequest } from '../../config';
 import { acceptFriendRequest } from '../../config';
 import { cancelFriendRequest } from '../../config';
 import { addFriendUrl } from '../../config';
 import { getFriendFeedsUrl } from '../../config';
-import Post from '../../pages/Post';
 
 function ViewProfile() {
   const location = useLocation();
@@ -54,7 +52,6 @@ function ViewProfile() {
         method: 'GET',
       });
       const userData = await response.json();
-      console.log(userData);
       setData(userData.user);
       setCurrUser(userData.currUserId);
       const dob = userData.user.dob.split('-');
@@ -62,7 +59,6 @@ function ViewProfile() {
       const month = dob[1];
       const year = dob[0];
       const formattedDate = `${year}-${month}-${date}`;
-
       setEmail(userData.user.email);
       setFirstName(userData.user.firstname);
       setlastName(userData.user.lastname);
@@ -77,7 +73,6 @@ function ViewProfile() {
       setGender(userData.user.gender);
     } catch (err) {
       toast.error('Something went wrong');
-      console.log(err);
     }
   };
   const getfriendFeeds = async () => {
@@ -86,12 +81,10 @@ function ViewProfile() {
         method: 'GET',
       });
       const feedsData = await response.json();
-      console.log(feedsData.feeds);
       setfeedsData(feedsData.feeds);
       setPostCount(feedsData.feedCount);
     } catch (err) {
       toast.error('Something went wrong');
-      console.log(err);
     }
   };
   const cancelRequest = async (id) => {
@@ -107,7 +100,6 @@ function ViewProfile() {
         toast.error(result.message);
       }
     } catch (err) {
-      console.log(err);
       toast.error('Something wemt wrong');
     }
   };
@@ -123,7 +115,6 @@ function ViewProfile() {
         toast.error(result.message);
       }
     } catch (err) {
-      console.log(err);
       toast.error('Something wemt wrong');
     }
   };
@@ -140,7 +131,6 @@ function ViewProfile() {
         toast.error(result.message);
       }
     } catch (err) {
-      console.log(err);
       toast.error('Something wemt wrong');
     }
   };
@@ -157,7 +147,6 @@ function ViewProfile() {
         toast.error(result.message);
       }
     } catch (err) {
-      console.log(err);
       toast.error('Something wemt wrong');
     }
   };
@@ -193,7 +182,9 @@ function ViewProfile() {
         </button>
       );
     }
-    if (viewedUser.friends.myFriends.includes(currUser)) { return <div className="primary-btn">Friends</div>; }
+    if (viewedUser.friends.myFriends.includes(currUser)) {
+      return <div className="primary-btn">Friends</div>;
+    }
     return (
       <button
         onClick={() => AddFriend(viewedUser._id)}
@@ -283,10 +274,8 @@ function ViewProfile() {
             <div className="mx-5 my-2">{data && handleButtons(data)}</div>
           </div>
         </div>
-        {/* <div className="col-md-5">eferfg</div> */}
       </div>
     </>
   );
 }
-
 export default ViewProfile;

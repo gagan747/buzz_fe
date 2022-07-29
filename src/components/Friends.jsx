@@ -41,7 +41,6 @@ export default function Friends() {
         FriendContext.forceRender();
       }
     } catch (err) {
-      console.log(err);
       toast.error('Something wemt wrong');
     }
   };

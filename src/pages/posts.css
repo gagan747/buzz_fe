@@ -10,12 +10,12 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
- }
+}
 .posttext {
   width: 100%;
   margin: auto;
   margin-top: 8px;
-  padding:20px;
+  padding: 20px;
   margin-bottom: 0px;
   min-height: 50px;
   max-height: 100px;
@@ -24,7 +24,7 @@
 }
 .posttext::-webkit-scrollbar {
   display: none;
- }
+}
 .like-comment-container {
   display: flex;
   justify-content: space-between;
@@ -49,9 +49,9 @@
 .options-dropdown {
   display: flex;
   flex-direction: column;
-  align-items:flex-start;
+  align-items: flex-start;
   font-size: 20px;
-  justify-content:center;
+  justify-content: center;
 }
 .moderator-options {
   display: flex;
@@ -62,16 +62,16 @@
 .moderator-options * {
   margin-left: 10px;
 }
-.postimage{
-    object-fit:cover ;
+.postimage {
+  object-fit: cover;
 }
-.optionsbutton{
-  position:absolute;
+.optionsbutton {
+  position: absolute;
   /* left:1180px */
 }
-.liked{
+.liked {
   color: blue;
 }
-.meow :hover{
-cursor:pointer
+.meow :hover {
+  cursor: pointer;
 }

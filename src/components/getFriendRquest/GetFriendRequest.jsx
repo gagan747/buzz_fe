@@ -9,61 +9,49 @@ import './GetFriendRequest.css';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar';
-import { getFriendRequests, acceptFriendRequest, cancelFriendRequest } from '../../config';
+import {
+  getFriendRequests,
+  acceptFriendRequest,
+  cancelFriendRequest,
+} from '../../config';
 
 function GetFriendRequest() {
   const [friendRequestData, setFriendRequestData] = useState([]);
   const loadRequest = async () => {
     try {
-      const response = await fetch(
-        getFriendRequests,
-        {
-          method: 'GET',
-        },
-      );
+      const response = await fetch(getFriendRequests, {
+        method: 'GET',
+      });
       const data = await response.json();
-      console.log(data);
       setFriendRequestData(data);
-      // setFriendRequestData([1,2,3,4,5,6,7,5,4,33,5,6,78,54]);
     } catch (error) {
       toast.error('Something went wrong');
     }
   };
   const handleConfirmReq = async (friendId) => {
     try {
-      const response = await fetch(
-        `${acceptFriendRequest}/${friendId}`,
-        {
-          method: 'POST',
-        },
-      );
+      const response = await fetch(`${acceptFriendRequest}/${friendId}`, {
+        method: 'POST',
+      });
       const data = await response.json();
-      console.log(data);
       if (response.status === 201) {
         toast.success(data.message);
       } else toast.error(data.message);
     } catch (error) {
-      console.log(error);
       toast.error('Something went wrong');
     }
     loadRequest();
   };
   const handleDeleteReq = async (friendId) => {
-    console.log(friendId, 'd');
     try {
-      const response = await fetch(
-        `${cancelFriendRequest}/${friendId}`,
-        {
-          method: 'POST',
-        },
-      );
+      const response = await fetch(`${cancelFriendRequest}/${friendId}`, {
+        method: 'POST',
+      });
       const data = await response.json();
-      console.log(data);
       if (response.status === 201) {
         toast.success(data.message);
       } else toast.error(data.message);
     } catch (error) {
-      console.log(error);
       toast.error('Something went wrong');
     }
     loadRequest();
@@ -80,12 +68,10 @@ function GetFriendRequest() {
             <div className="header  p-3 sticky-top">
               <h3>
                 <FontAwesomeIcon icon={faUserFriends} />
-&nbsp;
-                Friend Requests
+                &nbsp; Friend Requests
               </h3>
               <hr className="my-2" />
             </div>
-
             {friendRequestData
               && friendRequestData.map((friendData) => (
                 <div key={friendData._id}>
@@ -98,7 +84,10 @@ function GetFriendRequest() {
                           alt="..."
                         />
                         <div className="px-1">
-                          <Link to="/viewProfile" state={{ id: friendData._id }}>
+                          <Link
+                            to="/viewProfile"
+                            state={{ id: friendData._id }}
+                          >
                             <h5 className="my-1 text-info">
                               {`${friendData.firstname} ${friendData.lastname}`}
                             </h5>
@@ -137,5 +126,4 @@ function GetFriendRequest() {
     </>
   );
 }
-
 export default GetFriendRequest;
