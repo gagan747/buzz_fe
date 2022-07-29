@@ -31,7 +31,6 @@ export default function Post({ post }) {
   const updateComments = (newcomment) => {
     setCommentsdata([...commentsdata, newcomment]);
   };
-
   const handlePostToggle = async () => {
     try {
       const response = await fetch(
@@ -50,7 +49,6 @@ export default function Post({ post }) {
       toast.error('Something went wrong');
     }
   };
-
   const deleteComment = (id) => {
     setCommentsdata(commentsdata.filter((comment) => comment._id !== id));
   };
@@ -60,8 +58,7 @@ export default function Post({ post }) {
       const result = await response.json();
       if (response.status === 200) {
         toast.success(result.message);
-        console.log(feeds.pageIndex);
-        feeds.deletefeed(feeds.pageIndex);
+        feeds.deletefeed(post._id);
       } else if (response.status === 307) {
         navigate('/');
         toast.error('User Not logged In');
@@ -71,7 +68,6 @@ export default function Post({ post }) {
       console.log(err);
     }
   };
-
   const handleComment = async () => {
     try {
       setCommentstoggle(!commentstoggle);
@@ -86,7 +82,6 @@ export default function Post({ post }) {
       }
     } catch (err) { toast.error('Something went wrong'); }
   };
-
   const handleFlag = async () => {
     try {
       const response = await fetch(
@@ -115,7 +110,7 @@ export default function Post({ post }) {
       const result = await response.json();
       if (response.status === 200) {
         toast.success(result.message);
-        feeds.deletefeed(feeds.pageIndex);
+        feeds.deletefeed(post._id);
       } else if (response.status === 307) {
         navigate('/');
         toast.error('User Not logged In');

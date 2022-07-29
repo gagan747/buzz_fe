@@ -1,3 +1,6 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
 /* eslint-disable import/no-cycle */
@@ -18,7 +21,10 @@ import { toast } from 'react-toastify';
 import { userContext } from '../pages/Home';
 import { homeUrl, logoutUrl, searchSuggestionUrl } from '../config';
 
+const token = localStorage.getItem('x-auth-token');
+
 function Navbar() {
+  console.log(process.env.REACT_APP_STAGE);
   const location = useLocation();
   const currentuser = useContext(userContext);
   const [name, setName] = useState('');
@@ -42,7 +48,7 @@ function Navbar() {
       setIsModerator(data.is_Admin);
       setProfileImg(data.profileImg);
       setFriendRequestCount(data.friendRequestCount);
-      if (location.pathname === '/home') { currentuser.update(data.profile_img, data.is_Admin, data.user_id); }
+      if (location.pathname.startsWith('/home')) { currentuser.update(data.profile_img, data.is_Admin, data.user_id); }
     } catch (error) {
       console.log(error);
       toast.error('Something went wrong');
@@ -52,18 +58,10 @@ function Navbar() {
     islogged();
   }, []);
   const logout = async (e) => {
-    try {
-      e.preventDefault();
-      const res = await fetch(logoutUrl);
-      if (res.status === 200) {
-        toast.success('Logout successfully');
-        navigate('/');
-      } else {
-        toast.error('Something went wrong');
-      }
-    } catch (err) {
-      toast.error('Something went wrong');
-    }
+    e.preventDefault();
+    localStorage.removeItem('x-auth-token');
+    navigate('/');
+    toast.success('logot successfully');
   };
   const handleSearch = async (e) => {
     try {
@@ -93,7 +91,7 @@ function Navbar() {
       </Link>
       <span className="navbar-brand">{isModerator ? 'MODERATOR' : ''}</span>
       <form className="navbar-form form-inline">
-        {(location.pathname === '/home')
+        {(location.pathname.startsWith('/home'))
         && (
         <div className="suggestion-controller">
           {' '}
@@ -131,10 +129,7 @@ function Navbar() {
         )}
       </form>
       <div className="navbar-nav ml-auto ">
-        <a className="nav-item nav-link notifications">
-          <FontAwesomeIcon icon={faBell} />
-          <span className="badge">1</span>
-        </a>
+
         <Link className="nav-item nav-link messages" to="/getFriendRequest">
           <FontAwesomeIcon icon={faUser} />
           <span className="badge">{friendRequestCount}</span>

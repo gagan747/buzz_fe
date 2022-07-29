@@ -1,3 +1,8 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable prefer-const */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-plusplus */
+/* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-mixed-operators */
 /* eslint-disable no-console */
@@ -12,23 +17,20 @@ import React, {
 } from 'react';
 import AddFeed from './AddFeed';
 import POSTS from '../pages/POSTS';
-import Pagination from './Pagination';
 import { userContext } from '../pages/Home';
 import { apiUrl } from '../config';
 
 const feedContext = createContext();
 export { feedContext };
-
 const pageLimit = 10;
-
 function Feed({ children }) {
-  const [feedCount, setFeedCount] = useState(0);
-  const [pageCount, setPageCount] = useState(0);
-  const [feeds, setFeeds] = useState([]);
-  const [pageIndex, setPageIndex] = useState(1);
+  console.log('from feeds');
+  const [pageNumber, setPageNumber] = useState(1);
+  let [feeds, setFeeds] = useState([]);
   const currentuser = useContext(userContext);
-  const addfeed = () => {
-    postload(1);
+  const [noMore, setNoMore] = useState(true);
+  const addfeed = (newFeed) => {
+    setFeeds([newFeed, ...feeds]);
   };
   const updatefeed = (updatedfeed) => {
     feeds.map((feed) => {
@@ -39,31 +41,29 @@ function Feed({ children }) {
       }
     });
   };
-  const deletefeed = (pageNo) => {
-    if (pageCount % pageLimit === 1 && feedCount - 1 !== 0) {
-      pageNo -= 1;
-      setPageIndex(pageNo);
-    }
-    postload(pageNo);
+  const deletefeed = (id) => {
+    feeds = (feeds.filter((feed) => feed._id !== id));
+    postload();
   };
-
   useEffect(() => {
-    postload(1);
+    (currentuser.user.is_Admin !== 'notLoaded') && postload();
   }, [currentuser.user]);
-  const postload = async (pageNumber) => {
+  const postload = async () => {
     try {
       const response = await fetch(`${apiUrl}/${currentuser.user.is_Admin && ('moderator/getFeeds') || ('feed')}/?pageNumber=${pageNumber}&pageLimit=${pageLimit}`);
       const postsdata = await response.json();
-      setFeeds(postsdata.feeds);
-      setPageCount(postsdata.pageCount);
-      setFeedCount(postsdata.feedCount);
+
+      if (response.status === 200) {
+        if (postsdata.feeds.length === 0 || postsdata.feeds.length < pageLimit) { setNoMore(false); }
+        setFeeds([...feeds, ...postsdata.feeds]);
+        setPageNumber(pageNumber + 1);
+      }
     } catch (err) {
       console.log(err);
     }
   };
-  const getFeeds = (pageNumber) => {
-    setPageIndex(pageNumber);
-    postload(pageNumber);
+  const getFeeds = () => {
+    postload();
   };
   return (
     <feedContext.Provider
@@ -72,17 +72,14 @@ function Feed({ children }) {
         addfeed,
         deletefeed,
         updatefeed,
-        feedCount,
-        pageLimit,
         getFeeds,
-        pageIndex,
+        noMore,
       }}
     >
       <div className="d-flex flex-column justify-content-center align-items-center ">
-        {pageIndex === 1 && <AddFeed />}
-        <POSTS />
-        <Pagination />
+        <AddFeed />
       </div>
+      <POSTS />
       {children}
     </feedContext.Provider>
   );

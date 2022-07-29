@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable import/order */
 /* eslint-disable import/extensions */
@@ -14,6 +16,7 @@ import NotFound from './pages/notfound.jsx';
 import UserProfile from './components/userProfile/UserProfile';
 import ViewProfile from './components/viewProfile/ViewProfile';
 import GetFriendRequest from './components/getFriendRquest/GetFriendRequest';
+import { unregister } from './interceptor';
 
 function App() {
   return (
@@ -24,6 +27,7 @@ function App() {
         <Route path="/forgotpassword" element={<Forgotpassword />} />
         <Route path="/*" element={<NotFound />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/home/:jwtoken" element={<Home />} />
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path="/viewProfile" element={<ViewProfile />} />
         <Route path="/getFriendRequest" element={<GetFriendRequest />} />

@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
@@ -39,6 +40,7 @@ export default function Login({ error }) {
       const data = await response.json();
       if (response.status == 200) {
         toast.success(data.message);
+        localStorage.setItem('x-auth-token', response.headers.get('x-auth-token'));
         navigate('/home');
       } else { toast.error(data.message); }
     } catch (err) {
@@ -70,7 +72,7 @@ export default function Login({ error }) {
                         <i onClick={() => { setShowpassword(!showpassword); }} className="d-inline fa fa-eye " />
                       </div>
                       <div style={{ margin: '50px' }} className=" row justify-content-around mx-4 mb-5  mb-lg-4">
-                        <button type="submit" style={{ fontWeight: 'bold' }} className="btn m-2 col-xl-5 col-sm-12  btn-primary ">login</button>
+                        <button type="submit" style={{ fontWeight: 'bold' }} className="btn m-2 col-xl-5 col-sm-12  btn-primary">Login</button>
                         <a href="http://localhost:5000/auth/google" role="button" aria-pressed="true" className="btn m-2  col-xl-5 col-sm-12 btn-danger ">
                           {' '}
                           <i className="fa fa-google-plus fa-lg me-3 fa-fw text-white" />

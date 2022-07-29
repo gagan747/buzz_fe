@@ -3,7 +3,8 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable camelcase */
 /* eslint-disable import/no-cycle */
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Feed from '../components/Feed';
 import FriendsContext from '../components/FriendsContext';
@@ -12,10 +13,18 @@ const userContext = createContext();
 export { userContext };
 
 function Home() {
-  const [user, setUser] = useState({ profile_img: '', is_Admin: false, user_id: '' });
+  const { jwtoken } = useParams();
+  const navigate = useNavigate();
+  const [user, setUser] = useState({ profile_img: '', is_Admin: 'notLoaded', user_id: '' });
   const update = (profile_img, is_Admin, user_id) => {
     setUser({ profile_img, is_Admin, user_id });
   };
+  useEffect(() => {
+    if (jwtoken) {
+      localStorage.setItem('x-auth-token', jwtoken);
+      navigate('/home');
+    }
+  }, []);
   return (
     <userContext.Provider value={{ user, update }}>
       <Navbar />
