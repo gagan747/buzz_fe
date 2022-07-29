@@ -100,7 +100,7 @@
 @media only screen and (min-width: 770px) {
   input[type="date"]::-webkit-calendar-picker-indicator {
     position: relative;
-    right:287px;
+    right: 287px;
   }
 
   input::-webkit-datetime-edit {

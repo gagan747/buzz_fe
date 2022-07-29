@@ -18,7 +18,7 @@ import { commentUrl } from '../config';
 export default function Commentbox({ data }) {
   const navigate = useNavigate();
   const currentUser = useContext(userContext);
-  const obj = useContext(commentContext);
+  const commentObject = useContext(commentContext);
   const [updatetoggle, setUpdatetoggle] = useState(false);
   const [commentdata, setCommentdata] = useState(data.comment);
   const inputfocus = useRef(null);
@@ -27,7 +27,9 @@ export default function Commentbox({ data }) {
     setCommentdata(data.comment);
   }, [data.comment]);
   useEffect(() => {
-    if (updatetoggle) { inputfocus.current.focus(); }
+    if (updatetoggle) {
+      inputfocus.current.focus();
+    }
   }, [updatetoggle]);
   const handleDelete = async () => {
     try {
@@ -37,14 +39,15 @@ export default function Commentbox({ data }) {
       const resultdata = await result.json();
       if (result.status === 200) {
         toast.success(resultdata.message);
-        obj.deleteComment(data._id);
+        commentObject.deleteComment(data._id);
       } else if (result.status === 307) {
         navigate('/');
         toast.error('User Not logged In');
-      } else { toast.error(resultdata.message); }
+      } else {
+        toast.error(resultdata.message);
+      }
     } catch (err) {
       toast.error('Something went wrong');
-      console.log(err);
     }
   };
   const handleUpdate = async () => {
@@ -58,7 +61,9 @@ export default function Commentbox({ data }) {
           body: JSON.stringify({ comment: commentdata }),
         });
         const resultdata = await result.json();
-        if (result.status === 200) { toast.success(resultdata.message); } else {
+        if (result.status === 200) {
+          toast.success(resultdata.message);
+        } else {
           toast.error(resultdata.message);
           return;
         }
@@ -66,27 +71,51 @@ export default function Commentbox({ data }) {
       setUpdatetoggle(!updatetoggle);
     } catch (err) {
       toast.error('Something went wrong');
-      console.log(err);
     }
   };
   return (
     <div className="commentcontainer">
       <div>
-        <img className="image" src={data.user_Id.profile_img} width="40px" height="40px" alt="" />
-        <span style={{ marginLeft: '8px' }}>{`${data.user_Id.firstname} ${data.user_Id.lastname}`}</span>
+        <img
+          className="image"
+          src={data.user_Id.profile_img}
+          width="40px"
+          height="40px"
+          alt=""
+        />
+        <span
+          style={{ marginLeft: '8px' }}
+        >
+          {`${data.user_Id.firstname} ${data.user_Id.lastname}`}
+
+        </span>
       </div>
       <div className="commentedit">
-        {
-            (updatetoggle && <input ref={inputfocus} type="text" className="toggleinput" value={commentdata} onChange={(e) => { setCommentdata(e.target.value); }} />) || (
-            <p>
-              {' '}
-              {commentdata}
-            </p>
-            )
-          }
-        {(data.user_Id._id === currentUser.user.user_id) && (
+        {(updatetoggle && (
+          <input
+            ref={inputfocus}
+            type="text"
+            className="toggleinput"
+            value={commentdata}
+            onChange={(e) => {
+              setCommentdata(e.target.value);
+            }}
+          />
+        )) || (
+        <p>
+          {' '}
+          {commentdata}
+        </p>
+        )}
+        {data.user_Id._id === currentUser.user.user_id && (
           <div className="icon-spacing">
-            <i onClick={handleUpdate} className={(updatetoggle && 'updatebutton') || 'fa fa-pencil'} aria-hidden="true">{updatetoggle && 'Update'}</i>
+            <i
+              onClick={handleUpdate}
+              className={(updatetoggle && 'updatebutton') || 'fa fa-pencil'}
+              aria-hidden="true"
+            >
+              {updatetoggle && 'Update'}
+            </i>
             <i onClick={handleDelete} className="fa fa-remove" />
           </div>
         )}

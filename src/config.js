@@ -1,26 +1,31 @@
-export const apiUrl = process.env.REACT_APP_STAGE === 'production' ? 'https://chat-with-buzz.herokuapp.com/api' : 'http://localhost:5000/api';
-export const homeUrl = `${apiUrl}/home`;
-export const logoutUrl = `${apiUrl}/logout`;
-export const commentUrl = `${apiUrl}/comments/`;
-export const feedUrl = `${apiUrl}/feed/`;
-export const flagFeedUrl = `${apiUrl}/feed/flag/`;
-export const likeFeedUrl = `${apiUrl}/feed/like/`;
-export const ModeratorUrl = `${apiUrl}/moderator/`;
-export const getUserProfileUrl = `${apiUrl}/userprofile`;
-export const forgotPasswordUrl = `${apiUrl}/forgotpassword`;
-export const forgotPasswordOtpGeneratorUrl = `${apiUrl}/forgotpassword/otpgenerator`;
-export const loginApiUrl = `${apiUrl}/login`;
-export const registerApiUrl = `${apiUrl}/register`;
-export const searchSuggestionUrl = `${apiUrl}/search/suggestions`;
-export const jsonDataUrl = 'https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json';
-export const addFriendUrl = `${apiUrl}/friends/addfriend`;
-export const acceptFriendRequest = `${apiUrl}/friends/acceptRequest`;
-export const cancelFriendRequest = `${apiUrl}/friends/cancelRequest`;
-export const deleteFriendRequest = `${apiUrl}/friends/deleteRequest`;
-export const friendSuggestions = `${apiUrl}/suggestions`;
-export const unfriend = `${apiUrl}/friends/unFriend`;
-export const getFriends = `${apiUrl}/friends/getFriends`;
-export const getFriendRequests = `${apiUrl}/friends/getFriendRequests`;
-export const userProfileUpdate = `${apiUrl}/userprofile/update`;
-export const viewProfileUrl = `${apiUrl}/viewprofile`;
-export const getFriendFeedsUrl = `${apiUrl}/friendFeeds`;
+/* eslint-disable max-len */
+const apiUrl = process.env.REACT_APP_STAGE === 'production' ? 'https://chat-with-buzz.herokuapp.com/api' : 'http://localhost:5000/api';
+const homeUrl = `${apiUrl}/home`;
+const logoutUrl = `${apiUrl}/logout`;
+const commentUrl = `${apiUrl}/comments/`;
+const feedUrl = `${apiUrl}/feed/`;
+const flagFeedUrl = `${apiUrl}/feed/flag/`;
+const likeFeedUrl = `${apiUrl}/feed/like/`;
+const ModeratorUrl = `${apiUrl}/moderator/`;
+const getUserProfileUrl = `${apiUrl}/userprofile`;
+const forgotPasswordUrl = `${apiUrl}/forgotpassword`;
+const forgotPasswordOtpGeneratorUrl = `${apiUrl}/forgotpassword/otpgenerator`;
+const loginApiUrl = `${apiUrl}/login`;
+const registerApiUrl = `${apiUrl}/register`;
+const searchSuggestionUrl = `${apiUrl}/search/suggestions`;
+const jsonDataUrl = 'https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json';
+const addFriendUrl = `${apiUrl}/friends/addfriend`;
+const acceptFriendRequest = `${apiUrl}/friends/acceptRequest`;
+const cancelFriendRequest = `${apiUrl}/friends/cancelRequest`;
+const deleteFriendRequest = `${apiUrl}/friends/deleteRequest`;
+const friendSuggestions = `${apiUrl}/suggestions`;
+const unfriend = `${apiUrl}/friends/unFriend`;
+const getFriends = `${apiUrl}/friends/getFriends`;
+const getFriendRequests = `${apiUrl}/friends/getFriendRequests`;
+const userProfileUpdate = `${apiUrl}/userprofile/update`;
+const viewProfileUrl = `${apiUrl}/viewprofile`;
+const getFriendFeedsUrl = `${apiUrl}/friendFeeds`;
+
+exports = {
+  apiUrl, homeUrl, logoutUrl, commentUrl, feedUrl, flagFeedUrl, likeFeedUrl, ModeratorUrl, getUserProfileUrl, forgotPasswordUrl, forgotPasswordOtpGeneratorUrl, loginApiUrl, registerApiUrl, searchSuggestionUrl, jsonDataUrl, addFriendUrl, acceptFriendRequest, cancelFriendRequest, deleteFriendRequest, friendSuggestions, unfriend, getFriends, getFriendRequests, userProfileUpdate, viewProfileUrl, getFriendFeedsUrl,
+};

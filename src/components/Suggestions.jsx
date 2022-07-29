@@ -16,7 +16,11 @@ import { Link } from 'react-router-dom';
 import { friendContext } from './FriendsContext';
 import { userContext } from '../pages/Home';
 import {
-  addFriendUrl, acceptFriendRequest, cancelFriendRequest, deleteFriendRequest, friendSuggestions,
+  addFriendUrl,
+  acceptFriendRequest,
+  cancelFriendRequest,
+  deleteFriendRequest,
+  friendSuggestions,
 } from '../config';
 
 function Suggestions() {
@@ -24,7 +28,9 @@ function Suggestions() {
   const { user_id } = useContext(userContext).user;
   const AddFriend = async (friend_id) => {
     try {
-      const response = await fetch(`${addFriendUrl}/${friend_id}`, { method: 'POST' });
+      const response = await fetch(`${addFriendUrl}/${friend_id}`, {
+        method: 'POST',
+      });
       const result = await response.json();
       if (response.status === 201) {
         toast.success(result.message);
@@ -34,13 +40,14 @@ function Suggestions() {
         loadSuggestions();
       }
     } catch (err) {
-      console.log(err);
       toast.error('Something wemt wrong');
     }
   };
   const acceptRequest = async (friend_id) => {
     try {
-      const response = await fetch(`${acceptFriendRequest}/${friend_id}`, { method: 'POST' });
+      const response = await fetch(`${acceptFriendRequest}/${friend_id}`, {
+        method: 'POST',
+      });
       const result = await response.json();
       if (response.status === 201) {
         toast.success(result.message);
@@ -50,13 +57,14 @@ function Suggestions() {
         loadSuggestions();
       }
     } catch (err) {
-      console.log(err);
       toast.error('Something wemt wrong');
     }
   };
   const rejectRequest = async (friend_id) => {
     try {
-      const response = await fetch(`${cancelFriendRequest}/${friend_id}`, { method: 'POST' });
+      const response = await fetch(`${cancelFriendRequest}/${friend_id}`, {
+        method: 'POST',
+      });
       const result = await response.json();
       if (response.status === 201) {
         toast.success(result.message);
@@ -66,13 +74,14 @@ function Suggestions() {
         loadSuggestions();
       }
     } catch (err) {
-      console.log(err);
       toast.error('Something wemt wrong');
     }
   };
   const cancelRequest = async (friend_id) => {
     try {
-      const response = await fetch(`${deleteFriendRequest}/${friend_id}`, { method: 'POST' });
+      const response = await fetch(`${deleteFriendRequest}/${friend_id}`, {
+        method: 'POST',
+      });
       const result = await response.json();
       if (response.status === 201) {
         toast.success(result.message);
@@ -82,7 +91,6 @@ function Suggestions() {
         loadSuggestions();
       }
     } catch (err) {
-      console.log(err);
       toast.error('Something wemt wrong');
     }
   };
@@ -90,14 +98,50 @@ function Suggestions() {
     if (suggestion.friends.mySentRequests.includes(user_id)) {
       return (
         <>
-          <button onClick={() => acceptRequest(suggestion._id)} type="button" className="btn btn-sm btn-primary m-1">Accept</button>
-          <button onClick={() => rejectRequest(suggestion._id)} type="button" className="btn btn-sm btn-primary">Reject</button>
+          <button
+            onClick={() => acceptRequest(suggestion._id)}
+            type="button"
+            className="btn btn-sm btn-primary m-1"
+          >
+            Accept
+          </button>
+          <button
+            onClick={() => rejectRequest(suggestion._id)}
+            type="button"
+            className="btn btn-sm btn-primary"
+          >
+            Reject
+          </button>
         </>
       );
     }
-    if (suggestion.friends.myFriendRequests.includes(user_id)) return (<button onClick={() => cancelRequest(suggestion._id)} type="button" className="btn btn-sm btn-primary mr-3 ">Cancel</button>);
-    if (suggestion.friends.myFriends.includes(user_id)) return (<button type="button" className="btn btn-sm btn-primary">Friends</button>);
-    return (<button onClick={() => AddFriend(suggestion._id)} type="button" className="btn btn-sm btn-primary ">Add Friend</button>);
+    if (suggestion.friends.myFriendRequests.includes(user_id)) {
+      return (
+        <button
+          onClick={() => cancelRequest(suggestion._id)}
+          type="button"
+          className="btn btn-sm btn-primary mr-3 "
+        >
+          Cancel
+        </button>
+      );
+    }
+    if (suggestion.friends.myFriends.includes(user_id)) {
+      return (
+        <button type="button" className="btn btn-sm btn-primary">
+          Friends
+        </button>
+      );
+    }
+    return (
+      <button
+        onClick={() => AddFriend(suggestion._id)}
+        type="button"
+        className="btn btn-sm btn-primary "
+      >
+        Add Friend
+      </button>
+    );
   };
   const allsuggestions = useRef([]);
   const filteredsuggestions = [];
@@ -112,7 +156,7 @@ function Suggestions() {
       if (response.status === 200) {
         setSuggestions(result);
         allsuggestions.current = result;
-      } else { console.log(result.message); }
+      }
     } catch (err) {
       console.log(err);
     }
@@ -135,18 +179,32 @@ function Suggestions() {
       regexlast = new RegExp(str1, 'i');
     }
     allsuggestions.current.map((suggestion) => {
-      // const fullname=suggestion.firstname+" "+suggestion.lastname;
       if (e.target.value.indexOf(' ') !== -1) {
-        if (regexfirst.test(suggestion.firstname) && regexlast.test(suggestion.lastname)) { filteredsuggestions.push(suggestion); }
-      } else if (regexfirst.test(suggestion.firstname) || regexlast.test(suggestion.lastname)) filteredsuggestions.push(suggestion);
+        if (
+          regexfirst.test(suggestion.firstname)
+          && regexlast.test(suggestion.lastname)
+        ) {
+          filteredsuggestions.push(suggestion);
+        }
+      } else if (
+        regexfirst.test(suggestion.firstname)
+        || regexlast.test(suggestion.lastname)
+      ) { filteredsuggestions.push(suggestion); }
     });
     setSuggestions(filteredsuggestions);
   };
   return (
     <div className="users-suggestions ">
       <div className="suggestions-search sticky-top">
-        <input onChange={handleSearch} type="text" id="input" placeholder="Suggestions" />
-        <label htmlFor="input"><i className="fa fa-search" aria-hidden="true" /></label>
+        <input
+          onChange={handleSearch}
+          type="text"
+          id="input"
+          placeholder="Suggestions"
+        />
+        <label htmlFor="input">
+          <i className="fa fa-search" aria-hidden="true" />
+        </label>
       </div>
       {suggestions.map((suggestion) => (
         <div className="users-container">
@@ -164,13 +222,10 @@ function Suggestions() {
               <span className="fullname">{`${suggestion.firstname} ${suggestion.lastname}`}</span>
             </Link>
           </span>
-          <span>
-            {handleButtons(suggestion)}
-          </span>
+          <span>{handleButtons(suggestion)}</span>
         </div>
       ))}
     </div>
   );
 }
-
 export default Suggestions;

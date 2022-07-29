@@ -3,8 +3,8 @@
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useState } from 'react';
-import './UserProfile.css';
 import { toast } from 'react-toastify';
+import './UserProfile.css';
 import Navbar from '../Navbar';
 import { userProfileUpdate, getUserProfileUrl } from '../../config';
 
@@ -48,12 +48,10 @@ function UserProfile() {
   };
   const country = [...new Set(data.map((item) => item.country))];
   country.sort();
-
   useEffect(() => {
     getJsonData();
     getUserProfile();
   }, []);
-
   const handleCountry = (e) => {
     let states = data.filter((state) => state.country === e.target.value);
     states = [...new Set(states.map((item) => item.subcountry))];
@@ -66,7 +64,6 @@ function UserProfile() {
     cities.sort();
     setCities(cities);
   };
-
   const imageUploader = (x) => {
     const reader = new FileReader();
     reader.onload = () => {
@@ -112,29 +109,22 @@ function UserProfile() {
       return;
     }
     formdata.append('state', selectedState);
-
     formdata.append('firstname', firstName);
     formdata.append('lastname', lastName);
     formdata.append('gender', gender);
     formdata.append('dob', dob);
     formdata.append('bio', bio);
     formdata.append('designation', designation);
-
-    if (selectedFile) formdata.append('profileImg', selectedFile, selectedFile.name);
+    if (selectedFile) { formdata.append('profileImg', selectedFile, selectedFile.name); }
     try {
       setLoader(true);
-      const response = await fetch(
-        userProfileUpdate,
-        {
-          method: 'PUT',
-          body: formdata,
-        },
-      );
-
+      const response = await fetch(userProfileUpdate, {
+        method: 'PUT',
+        body: formdata,
+      });
       const data = await response.json();
       if (response.status === 200) {
         toast.success(data.message);
-        console.log(data.updatedUser);
         setLoader(false);
       } else {
         toast.error(data.message);
@@ -152,13 +142,11 @@ function UserProfile() {
         method: 'GET',
       });
       const userData = await response.json();
-      console.log(userData);
       const dob = userData.dob.split('-');
       const date = dob[2].substring(0, 2);
       const month = dob[1];
       const year = dob[0];
       const formattedDate = `${year}-${month}-${date}`;
-
       setEmail(userData.email);
       setFirstName(userData.firstname);
       setlastName(userData.lastname);
@@ -167,16 +155,10 @@ function UserProfile() {
       setDob(formattedDate);
       setGender(userData.gender);
       setBio(userData.bio);
-      // setCountry(userData.country);
-      // setSelectedState(userData.state);
-      // setSelectedCity(userData.city);
-      // handleDynamicState(userData.country);
-      // handleDynamicCity(userData.state);
     } catch (err) {
       toast.error('Something went wrong');
     }
   };
-
   return (
     <>
       <Navbar />
@@ -192,11 +174,9 @@ function UserProfile() {
                     src={profileImg}
                     alt=""
                   />
-
                   <div className="small font-italic text-muted mb-4">
                     JPG or PNG no larger than 5 MB
                   </div>
-
                   <label className="fileLabel" htmlFor="file">
                     Choose Photo
                   </label>
@@ -241,7 +221,6 @@ function UserProfile() {
                         required
                       />
                     </div>
-
                     <div className="col-md-6">
                       <label className="small mb-1" htmlFor="inputLastName">
                         Last name
@@ -274,7 +253,6 @@ function UserProfile() {
                         required
                       />
                     </div>
-
                     <div className="col-md-6">
                       <label className="small mb-1" htmlFor="inputBirthday">
                         Date Of Birth
@@ -296,7 +274,6 @@ function UserProfile() {
                       <label className="small mb-1" htmlFor="gender">
                         Gender
                       </label>
-
                       <select
                         name="gender"
                         id="gender"
@@ -311,12 +288,10 @@ function UserProfile() {
                         <option value="Other">Other</option>
                       </select>
                     </div>
-
                     <div className="col-md-6">
                       <label className="small mb-1" htmlFor="country">
                         Country
                       </label>
-
                       <select
                         name="country"
                         id="country"
@@ -340,7 +315,6 @@ function UserProfile() {
                       <label className="small mb-1" htmlFor="state">
                         State
                       </label>
-
                       <select
                         name="state"
                         id="state"
@@ -358,12 +332,10 @@ function UserProfile() {
                         ))}
                       </select>
                     </div>
-
                     <div className="col-md-6">
                       <label className="small mb-1" htmlFor="gender">
                         City
                       </label>
-
                       <select
                         name="city"
                         id="city"
@@ -414,5 +386,4 @@ function UserProfile() {
     </>
   );
 }
-
 export default UserProfile;

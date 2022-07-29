@@ -12,7 +12,15 @@ export default function Comments() {
   const comments = commentcontext.commentsdata;
   return (
     <div className="comments">
-      {comments.length === 0 ? <p style={{ textAlign: 'center' }} className="mt-3 pt-4">No comments found</p> : comments.map((comment) => <Commentbox key={comment._id} data={comment} />)}
+      {comments.length === 0 ? (
+        <p style={{ textAlign: 'center' }} className="mt-3 pt-4">
+          No comments found
+        </p>
+      ) : (
+        comments.map((comment) => (
+          <Commentbox key={comment._id} data={comment} />
+        ))
+      )}
       <AddComment />
     </div>
   );
