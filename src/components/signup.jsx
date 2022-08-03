@@ -127,23 +127,9 @@ export default function Signup() {
       setState([]);
       setCity([]);
     } else {
-<<<<<<< HEAD
       setState([...new Set(countriesData.filter((countrydata) => countrydata.country === usersData.country).map((country) => country.subcountry))].sort());
       setusersData({ ...usersData, state: '', city: '' });
       setCity([]);
-=======
-      setState(
-        [
-          ...new Set(
-            countriesData
-              .filter(
-                (countrydata) => countrydata.country === usersData.country,
-              )
-              .map((country) => country.subcountry),
-          ),
-        ].sort(),
-      );
->>>>>>> 867f61b3a0999019263bbee2a304b9f491292883
     }
   }, [usersData.country]);
   useEffect(() => {
@@ -151,22 +137,11 @@ export default function Signup() {
       setCity([]);
       setusersData({ ...usersData, city: '' });
     } else {
-<<<<<<< HEAD
       setCity(countriesData.filter((countrydata) => countrydata.subcountry === usersData.state).map((country) => country.name).sort());
       setusersData({ ...usersData, city: '' });
     }
   }, [usersData.state]);
 
-=======
-      setCity(
-        countriesData
-          .filter((countrydata) => countrydata.subcountry === usersData.state)
-          .map((country) => country.name)
-          .sort(),
-      );
-    }
-  }, [usersData.country, usersData.state]);
->>>>>>> 867f61b3a0999019263bbee2a304b9f491292883
   return (
     <div className="vh-100" style={{ backgroundColor: '#eee' }}>
       <div className="container h-100">
@@ -275,77 +250,32 @@ export default function Signup() {
                       <div className="d-flex flex-row align-items-center mb-2">
                         <i className="fa fa-flag fa-lg me-3 fa-fw" />
                         <div className="form-outline flex-fill " />
-<<<<<<< HEAD
                         <select className="w-100 ml-2 options mb-2" name="country" onChange={(e) => { formdata(e); }}>
                           <option value="">Select Country</option>
                           {
                             Countries.map((data) => <option value={data} key={data}>{data}</option>)
                           }
-=======
-                        <select
-                          className="w-100 ml-2 options mb-2"
-                          name="country"
-                          onChange={(e) => {
-                            formdata(e);
-                          }}
-                        >
-                          <option selected>Select Country</option>
-                          {Countries.map((data) => (
-                            <option value={data}>{data}</option>
-                          ))}
->>>>>>> 867f61b3a0999019263bbee2a304b9f491292883
                         </select>
                       </div>
                       <div className="d-flex flex-row align-items-center mb-2">
                         <i className="fa fa-circle fa-lg me-3 fa-fw" />
                         <div className="form-outline flex-fill mb-2">
-<<<<<<< HEAD
                           <select className="w-100 ml-1 options" name="state" onChange={(e) => { formdata(e); }} required>
                             <option value="">Select State</option>
                             {
                          state.map((statevalue) => <option value={statevalue} key={statevalue}>{statevalue}</option>)
                           }
-=======
-                          <select
-                            className="w-100 ml-1 options"
-                            name="state"
-                            onChange={(e) => {
-                              formdata(e);
-                            }}
-                            required
-                          >
-                            <option selected>Select State</option>
-                            {state.map((statevalue) => (
-                              <option value={statevalue}>{statevalue}</option>
-                            ))}
->>>>>>> 867f61b3a0999019263bbee2a304b9f491292883
                           </select>
                         </div>
                       </div>
                       <div className="d-flex flex-row align-items-center mb-2">
                         <i className="fa fa-building fa-lg me-3 fa-fw" />
                         <div className="form-outline flex-fill mb-0">
-<<<<<<< HEAD
                           <select className="w-100 ml-1 options" name="city" onChange={(e) => { formdata(e); }} required>
                             <option value="">Select City</option>
                             {
                            city.map((cityvalue) => <option value={cityvalue} key={cityvalue}>{cityvalue}</option>)
                           }
-=======
-                          <select
-                            className="w-100 ml-1 options"
-                            name="city"
-                            onChange={(e) => {
-                              formdata(e);
-                            }}
-                            required
-                          >
-                            <option selected>Select City</option>
-                            {state.length !== 0
-                              && city.map((cityvalue) => (
-                                <option value={cityvalue}>{cityvalue}</option>
-                              ))}
->>>>>>> 867f61b3a0999019263bbee2a304b9f491292883
                           </select>
                         </div>
                       </div>

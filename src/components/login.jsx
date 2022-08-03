@@ -12,6 +12,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { loginApiUrl } from '../config';
 
 export default function Login({ error }) {
+  console.log(loginApiUrl);
   const navigate = useNavigate();
   useEffect(() => {
     if (error) {
@@ -44,7 +45,7 @@ export default function Login({ error }) {
         navigate('/home');
       } else { toast.error(data.message); }
     } catch (err) {
-      toast.error('Something went wrong');
+      console.log(err);
     }
   };
   return (
