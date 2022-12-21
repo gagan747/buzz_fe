@@ -26,6 +26,7 @@ const userProfileUpdate = `${apiUrl}/userprofile/update`;
 const viewProfileUrl = `${apiUrl}/viewprofile`;
 const getFriendFeedsUrl = `${apiUrl}/friendFeeds`;
 
+
 export {
   apiUrl, homeUrl, logoutUrl, commentUrl, feedUrl, flagFeedUrl, likeFeedUrl, ModeratorUrl, getUserProfileUrl, forgotPasswordUrl, forgotPasswordOtpGeneratorUrl, loginApiUrl, registerApiUrl, searchSuggestionUrl, jsonDataUrl, addFriendUrl, acceptFriendRequest, cancelFriendRequest, deleteFriendRequest, friendSuggestions, unfriend, getFriends, getFriendRequests, userProfileUpdate, viewProfileUrl, getFriendFeedsUrl,
 };
